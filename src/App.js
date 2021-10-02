@@ -3,9 +3,11 @@ import { useState } from 'react';
 import { ethers } from 'ethers'
 import Greeter from './artifacts/contracts/Greeter.sol/Greeter.json'
 import Token from './artifacts/contracts/Token.sol/Token.json'
+import EtherCoinFlip from './artifacts/contracts/EtherCoinFlip.sol/EtherCoinFlip.json' // import the contract artifact file
 
-const greeterAddress = "0x87140Ae67c09E3bC92D8FFb815D2D4fa4bEE2b02"
-const tokenAddress = "0x5f83672D19534E8C728a3189195648F57C114f36"
+const greeterAddress = "0x0a337D5f4E3ba3f9eb413884d803dA8F1C8a9981"
+const tokenAddress = "0x0a337D5f4E3ba3f9eb413884d803dA8F1C8a9981"
+const ECFAddress = "0x0a337D5f4E3ba3f9eb413884d803dA8F1C8a9981"
 
 function App() {
   const [greeting, setGreetingValue] = useState()

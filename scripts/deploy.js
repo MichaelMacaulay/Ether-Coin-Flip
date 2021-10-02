@@ -11,6 +11,9 @@ async function main() {
   const Greeter = await hre.ethers.getContractFactory("Greeter");
   const greeter = await Greeter.deploy("Hello, World!");
 
+  const EtherCoinFlip = await hre.ethers.getContractFactory("EtherCoinFlip");
+  const ethCoinFlip = await EtherCoinFlip.deploy();
+
   const Token = await hre.ethers.getContractFactory("Token");
   const token = await Token.deploy();
 
@@ -19,6 +22,7 @@ async function main() {
 
   console.log("Greeter deployed to:", greeter.address);
   console.log("Token deployed to:", token.address);
+  console.log("EtherCoinFlip deployed to:", ethercoinflip.address);
 }
 
 main()
