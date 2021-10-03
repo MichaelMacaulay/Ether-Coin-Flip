@@ -23,14 +23,18 @@ contract EtherCoinFlip {
     event EtherCoinFlipped(uint256 indexed theCoinFlipID);
 
     // Start the Ether coin flip
-    function newPureCoinFlip() public payable returns (uint256 coinFlipID) {
-        require(msg.value >= minimumEth);
+    function newPureCoinFlip(uint256 startingETHWager)
+        public
+        payable
+        returns (uint256 coinFlipID)
+    {
+        require(startingETHWager >= minimumEth);
         coinFlipID = numCoinFlips++;
         EtherCoinFlipStructs[coinFlipID] = EtherCoinFlipStruct(
             msg.sender, //address payable betStarter;
-            msg.value, // uint256 startingWager;
+            startingETHWager, // uint256 startingWager;
             msg.sender, // address payable betEnder;
-            msg.value, // uint256 endingWager;
+            startingETHWager, // uint256 endingWager;
             0, // uint256 etherTotal;
             msg.sender, // address payable winner;
             msg.sender // address payable loser;
@@ -42,12 +46,15 @@ contract EtherCoinFlip {
 
     // End the Ether coin flip
 
-    function endPureCoinFlip(uint256 coinFlipID) public payable {
+    function endPureCoinFlip(uint256 coinFlipID, uint256 endingETHWager)
+        public
+        payable
+    {
         require(coinFlipID == coinFlipID);
+        require(endingETHWager >= minimumEth);
         EtherCoinFlipStruct memory c = EtherCoinFlipStructs[coinFlipID];
-        require(msg.value == c.startingWager);
         c.betEnder = msg.sender;
-        c.endingWager = msg.value;
+        c.endingWager = endingETHWager;
         c.etherTotal = c.startingWager + c.endingWager;
 
         uint256 finalVerdict = block.number +
