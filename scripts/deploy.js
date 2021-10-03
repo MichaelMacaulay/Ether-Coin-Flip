@@ -8,21 +8,28 @@ async function main() {
     deployer.address
   );
 
-  const Greeter = await hre.ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, World!");
+  // const Greeter = await hre.ethers.getContractFactory("Greeter");
+  // const greeter = await Greeter.deploy("Hello, World!");
 
   const EtherCoinFlip = await hre.ethers.getContractFactory("EtherCoinFlip");
-  const ethCoinFlip = await EtherCoinFlip.deploy();
+  const etherCoinFlip = await EtherCoinFlip.deploy();
 
-  const Token = await hre.ethers.getContractFactory("Token");
-  const token = await Token.deploy();
 
-  await greeter.deployed();
-  await token.deployed();
 
-  console.log("Greeter deployed to:", greeter.address);
-  console.log("Token deployed to:", token.address);
-  console.log("EtherCoinFlip deployed to:", ethercoinflip.address);
+
+
+
+
+  // const Token = await hre.ethers.getContractFactory("Token");
+  // const token = await Token.deploy();
+
+  // await greeter.deployed();
+  // await token.deployed();
+  await etherCoinFlip.deployed();
+
+  // console.log("Greeter deployed to:", greeter.address);
+  // console.log("Token deployed to:", token.address);
+  console.log("EtherCoinFlip deployed to:", etherCoinFlip.address);
 }
 
 main()
