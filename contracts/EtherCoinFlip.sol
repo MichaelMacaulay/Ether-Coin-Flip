@@ -3,7 +3,6 @@
 pragma solidity ^0.7.6;
 
 contract EtherCoinFlip {
-    uint256 minimumEth = 100000;
     uint256 etherWinnings;
 
     struct EtherCoinFlipStruct {
@@ -23,12 +22,56 @@ contract EtherCoinFlip {
     event EtherCoinFlipped(uint256 indexed theCoinFlipID);
 
     // Start the Ether coin flip
-    function newPureCoinFlip() public payable returns (uint256 coinFlipID) {
-        require(msg.value >= minimumEth);
+    function newPureCoinFlip(uint256 startingETHWager) public payable returns (uint256 coinFlipID) {
         coinFlipID = numCoinFlips++;
         EtherCoinFlipStructs[coinFlipID] = EtherCoinFlipStruct(
             msg.sender, //address payable betStarter;
-            msg.value, // uint256 startingWager;
+            startingETHWager, // uint256 startingWager;
+            msg.sender, // address payable betEnder;
+            msg.value, // uint256 endingWager;
+            0, // uint256 etherTotal;
+            msg.sender, // address payable winner;
+            msg.sender // address payable loser;
+        );
+        emit EtherCoinFlipped(coinFlipID);
+    }
+
+    // End the Ether coin flip
+
+    function endPureCoinFlip(uint256 coinFlipID) public payable {
+        require(coinFlipID == coinFlipID);
+        EtherCoinFlipStruct memory c = EtherCoinFlipStructs[coinFlipID];
+        require(msg.value == c.startingWager);
+        c.betEnder = msg.sender;
+        c.endingWager = msg.value;
+        c.etherTotal = c.startingWager + c.endingWager;
+
+        uint256 finalVerdict = block.number +
+            block.timestamp +
+            msg.value +
+            block.difficulty +
+            block.gaslimit +
+            tx.gasprice +
+            1;
+
+        if ((finalVerdict % 2) == 0) {
+            c.winner = c.betStarter;
+        } else {
+            c.winner = c.betEnder;
+        }
+
+        c.winner.transfer(c.etherTotal);
+
+        emit EtherCoinFinishedFlip(c.winner);
+    }
+
+    // Unequal coin EtherCoinFlips
+    // Start the Ether coin flip
+    function newCoinFlip(uint256 startingETHWager) public payable returns (uint256 coinFlipID) {
+        coinFlipID = numCoinFlips++;
+        EtherCoinFlipStructs[coinFlipID] = EtherCoinFlipStruct(
+            msg.sender, //address payable betStarter;
+            startingETHWager, // uint256 startingWager;
             msg.sender, // address payable betEnder;
             msg.value, // uint256 endingWager;
             0, // uint256 etherTotal;
@@ -42,10 +85,9 @@ contract EtherCoinFlip {
 
     // End the Ether coin flip
 
-    function endPureCoinFlip(uint256 coinFlipID) public payable {
+    function endCoinFlip(uint256 coinFlipID) public payable {
         require(coinFlipID == coinFlipID);
         EtherCoinFlipStruct memory c = EtherCoinFlipStructs[coinFlipID];
-        require(msg.value == c.startingWager);
         c.betEnder = msg.sender;
         c.endingWager = msg.value;
         c.etherTotal = c.startingWager + c.endingWager;
