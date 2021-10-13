@@ -7,8 +7,8 @@ import EtherCoinFlip from './artifacts/contracts/EtherCoinFlip.sol/EtherCoinFlip
 const ECFAddress = "0xB17846d10FCBa35055C10523B300ce9A5adea809"
 
 function App() {
-  const [wager, setWager] = useState() // amount of ether to send to Eth coin flip
-  const [coinFlipId, setCoinFlipId] = useState() // id of the coin flip
+  const [wager, setWager] = useState() 
+  const [coinFlipId, setCoinFlipId] = useState() 
 
   async function requestAccount() {
     await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -22,7 +22,7 @@ function App() {
       const signer = provider.getSigner();
       const contract = new ethers.Contract(ECFAddress, EtherCoinFlip.abi, signer);
       let updatedWager = ethers.utils.parseEther(wager.toString());
-      const tx = await contract.newPureCoinFlip({ value: updatedWager });
+      const tx = await contract.newCoinFlip({ value: updatedWager });
       tx.wait();
       console.log(`You started the wager with ${ethers.utils.formatEther(updatedWager)} ETH`);
     }
