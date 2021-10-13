@@ -3,9 +3,8 @@
 pragma solidity ^0.7.6;
 
 contract EtherCoinFlip {
-    uint256 etherWinnings;
-
     struct EtherCoinFlipStruct {
+        uint256 ID;
         address payable betStarter;
         uint256 startingWager;
         address payable betEnder;
@@ -18,20 +17,20 @@ contract EtherCoinFlip {
     uint256 numCoinFlips = 300;
     mapping(uint256 => EtherCoinFlipStruct) EtherCoinFlipStructs;
 
-    // Emit the event
     event EtherCoinFlipped(uint256 indexed theCoinFlipID);
 
     // Start the Ether coin flip
-    function newPureCoinFlip() public payable returns (uint256 coinFlipID) {
+    function newCoinFlip() public payable returns (uint256 coinFlipID) {
         coinFlipID = numCoinFlips++;
         EtherCoinFlipStructs[coinFlipID] = EtherCoinFlipStruct(
-            msg.sender, //address payable betStarter;
-            msg.value, // uint256 startingWager;
-            msg.sender, // address payable betEnder;
-            msg.value, // uint256 endingWager;
-            0, // uint256 etherTotal;
-            msg.sender, // address payable winner;
-            msg.sender // address payable loser;
+            coinFlipID,
+            msg.sender,
+            msg.value,
+            msg.sender,
+            msg.value,
+            0,
+            msg.sender,
+            msg.sender
         );
         emit EtherCoinFlipped(coinFlipID);
     }
@@ -39,10 +38,11 @@ contract EtherCoinFlip {
     event EtherCoinFinishedFlip(address indexed winner);
 
     // End the Ether coin flip
-
-    function endPureCoinFlip(uint256 coinFlipID) public payable {
-        require(coinFlipID == coinFlipID);
+    function endCoinFlip(uint256 coinFlipID) public payable {
         EtherCoinFlipStruct memory c = EtherCoinFlipStructs[coinFlipID];
+
+        require(coinFlipID == c.ID);
+
         c.betEnder = msg.sender;
         c.endingWager = msg.value;
         c.etherTotal = c.startingWager + c.endingWager;
@@ -62,7 +62,6 @@ contract EtherCoinFlip {
         }
 
         c.winner.transfer(c.etherTotal);
-
         emit EtherCoinFinishedFlip(c.winner);
     }
 }
