@@ -25,8 +25,8 @@ function App() {
       const tx = await contract.newCoinFlip({ value: updatedWager });
       tx.wait();
       console.log(`You started the wager with ${ethers.utils.formatEther(updatedWager)} ETH`);
-      const event = contract.on('EtherCoinFlipped', (coinFlipId, coinFlipWager, coinFlipResult) => {
-        alert(`CoinFlipID ${coinFlipId} was flipped with ${updatedWager} ETH`);
+      let event = contract.on('EtherCoinFlipped', (coinFlipId) => {
+        alert(`CoinFlipID ${coinFlipId} was flipped`);
       });
     }
   }
