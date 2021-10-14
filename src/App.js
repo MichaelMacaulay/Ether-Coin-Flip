@@ -4,7 +4,7 @@ import { ethers } from 'ethers'
 import EtherCoinFlip from './artifacts/contracts/EtherCoinFlip.sol/EtherCoinFlip.json'
 
 
-const ECFAddress = "0xB17846d10FCBa35055C10523B300ce9A5adea809"
+const ECFAddress = "0x20dfA0b80882951574ea1335B25730961302bd6f"
 
 function App() {
   const [wager, setWager] = useState() 
@@ -25,6 +25,9 @@ function App() {
       const tx = await contract.newCoinFlip({ value: updatedWager });
       tx.wait();
       console.log(`You started the wager with ${ethers.utils.formatEther(updatedWager)} ETH`);
+      const event = contract.on('EtherCoinFlipped', (coinFlipId, coinFlipWager, coinFlipResult) => {
+        alert(`CoinFlipID ${coinFlipId} was flipped with ${updatedWager} ETH`);
+      });
     }
   }
 
@@ -34,9 +37,10 @@ function App() {
     const signer = provider.getSigner();
     const contract = new ethers.Contract(ECFAddress, EtherCoinFlip.abi, signer);
     let updatedWager = ethers.utils.parseEther(wager.toString());
-    const tx = await contract.endPureCoinFlip(coinFlipId, {value: updatedWager});
+    const tx = await contract.endCoinFlip(coinFlipId, {value: updatedWager});
     tx.wait();
     console.log(tx);
+    alert('You successfully ended the coin flip. Check your wallet to see if you won. Congrats or condolences.');
   }
 
   return (
