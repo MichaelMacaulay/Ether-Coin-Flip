@@ -34,6 +34,7 @@ function App() {
 
 
   async function endCoinFlip() {
+    await requestAccount()
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const contract = new ethers.Contract(ECFAddress, EtherCoinFlip.abi, signer);
@@ -49,7 +50,7 @@ function App() {
 
     <header className="App-header">
       <h1>Ether Coin Flip</h1>
-      <h4>Send your ETH to this contract with a 50/50 shot to double it!</h4>
+      <h4>Send your ETH to this contract with a 50/50 shot to double it! Send Your Coin Flip ID to a friend or enemy!</h4>
       <button value={wager} onClick={startCoinFlip}>Start the coin flip!</button>
       <input onChange={e => setWager(e.target.value)} placeholder="Send your ETH"/>
       <br />
