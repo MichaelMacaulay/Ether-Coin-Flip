@@ -28,6 +28,7 @@ function App() {
       let event = contract.on('EtherCoinFlipped', (coinFlipId) => {
         alert(`CoinFlipID ${coinFlipId} was flipped`);
       });
+      event.wait();
     }
   }
 
