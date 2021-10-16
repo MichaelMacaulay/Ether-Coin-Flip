@@ -4,7 +4,7 @@ import { ethers } from 'ethers'
 import EtherCoinFlip from './artifacts/contracts/EtherCoinFlip.sol/EtherCoinFlip.json'
 
 
-const ECFAddress = "0x20dfA0b80882951574ea1335B25730961302bd6f"
+const ECFAddress = "0xA190156e3Dd5Fb8654B8331a669c0bBC63dFE67E"
 
 function App() {
   const [wager, setWager] = useState() 
@@ -48,13 +48,13 @@ function App() {
 
     <header className="App-header">
       <h1>Ether Coin Flip</h1>
-      <h3>Send your ETH to this contract with a 50/50 shot to double it!</h3>
+      <h4>Send your ETH to this contract with a 50/50 shot to double it!</h4>
       <button value={wager} onClick={startCoinFlip}>Start the coin flip!</button>
       <input onChange={e => setWager(e.target.value)} placeholder="Send your ETH"/>
       <br />
             <h2>End a wager</h2>
-      <h3>Send ETH to a coin flip that has already begun</h3>
-      <p>Make sure to send an equal amount of ETH as the person who started the Coin Flip</p>
+      <h4>Send ETH to a coin flip that has already begun</h4>
+      <p>Make sure to send an equal amount of ETH as the person who started the Coin Flip. Otherwise the transaction will fail.</p>
       <button value={wager} onClick={endCoinFlip}>End a coin flip!</button>
       <input onChange={e => setWager(e.target.value)} placeholder="Send your ETH"/>
       <input value={coinFlipId} onChange={e => setCoinFlipId(e.target.value)} placeholder="Coin Flip ID"/>

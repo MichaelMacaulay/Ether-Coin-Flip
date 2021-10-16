@@ -42,6 +42,7 @@ contract EtherCoinFlip {
         EtherCoinFlipStruct memory c = EtherCoinFlipStructs[coinFlipID];
 
         require(coinFlipID == c.ID);
+        require(msg.value == c.startingWager);
 
         c.betEnder = msg.sender;
         c.endingWager = msg.value;
