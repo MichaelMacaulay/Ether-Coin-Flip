@@ -42,7 +42,10 @@ function App() {
     const tx = await contract.endCoinFlip(coinFlipId, {value: updatedWager});
     tx.wait();
     console.log(tx);
-    alert('You successfully ended the coin flip. Check your wallet to see if you won. Congrats or condolences.');
+    let event = contract.on('EtherCoinFinishedFlip', (winner) => {
+        alert(`${winner} won the coin flip.`);
+      });
+      event.wait();
   }
 
   return (
