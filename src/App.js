@@ -54,6 +54,7 @@ function App() {
     <header className="App-header">
       <h1>Ether Coin Flip</h1>
       <h4>Send your ETH to this contract with a 50/50 shot to double it! Send Your Coin Flip ID to a friend or enemy!</h4>
+    <p> Please note this uses the Rinkeby test network. Using any other network will result in lost funds. </p>
       <button value={wager} onClick={startCoinFlip}>Start the coin flip!</button>
       <input onChange={e => setWager(e.target.value)} placeholder="Send your ETH"/>
       <br />
