@@ -7,9 +7,13 @@ Working example is running on the Rinkeby testnet and can be found [here](https:
 The game works like this.
 
 -Player 1 sends Ethereum to the new coin flip function
+
 -Smart contract generates a coin flip ID
+
 -Player 2 sends Ethereum to the end coin flip function & passes in the coin flip ID
+
 -Smart contract randomly generates a winner
+
 -Smart contract sends all the Ethereum to the winner
 
 Note is not professionally audited and is not verifiably random. Do not publish this to mainnet. It's for educational pruposes only.
