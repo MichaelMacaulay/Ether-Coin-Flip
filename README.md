@@ -16,4 +16,4 @@ The game works like this.
 
 -Smart contract sends all the Ethereum to the winner
 
-Note is not professionally audited and is not verifiably random. Do not publish this to mainnet. It's for educational pruposes only.
+**Note is not professionally audited and is not verifiably random. Do not publish this to mainnet. It's for educational pruposes only.**
