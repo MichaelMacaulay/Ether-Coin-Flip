@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.0;
 
-// import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
+import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 
 contract EtherCoinFlip is VRFConsumerBase {
     // testing with hard-coded values
@@ -13,7 +13,7 @@ contract EtherCoinFlip is VRFConsumerBase {
         )
     {
         keyHash = 0x2ed0feb3e7fd2022120aa84fab1945545a9f2ffc9076fd6156fa96eaff4c1311;
-        fee = 0.1;
+        fee = 0.1 * 10**18;
     }
 
     function getRandomNumber() public returns (bytes32 requestId) {
