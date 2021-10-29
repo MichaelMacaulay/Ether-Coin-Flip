@@ -2,7 +2,7 @@
 
 Ether Coin Flip allows 2 players to gamble Ethereum. You can find the full tutorial for this Dapp [here](https://levelup.gitconnected.com/the-complete-guide-to-building-an-ethereum-dapp-1692976ec4a5).
 
-Working example is running on the Rinkeby testnet and can be found [here](https://ethercoinflip.netlify.app/).
+Working example is running on the Rinkeby testnet and can be found [here](https://ethercoinflipchainlinkrvf.netlify.app/).
 
 The game works like this.
 
@@ -16,4 +16,4 @@ The game works like this.
 
 -Smart contract sends all the Ethereum to the winner
 
-**Note: this is not professionally audited and is not verifiably random. Do not publish this to mainnet. It's for educational pruposes only.**
+This smart contract using [chainlink's RVF](https://docs.chain.link/docs/get-a-random-number/) to secure randomness.
