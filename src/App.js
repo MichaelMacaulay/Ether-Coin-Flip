@@ -4,7 +4,7 @@ import { ethers } from 'ethers'
 import EtherCoinFlip from './artifacts/contracts/EtherCoinFlip.sol/EtherCoinFlip.json'
 
 
-const ECFAddress = "0xA190156e3Dd5Fb8654B8331a669c0bBC63dFE67E"
+const ECFAddress = "0x54C782e222e4920BA8c9F3b02F28823E156e8b8d"
 
 function App() {
   const [wager, setWager] = useState() 
