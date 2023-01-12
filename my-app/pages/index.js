@@ -22,14 +22,39 @@ const query = `{
 }`
 
 export default function Home() {
-
-  const result = useQuery({ query });
-
-  console.log(result);
+    const [result] = useQuery({
+    query: query
+  });
+  const { data } = result;
 
   return (
-    <>
-      
-    </>
-  )
+    <div>
+      {result.fetching ? (
+        <p>Loading...</p>
+      ) : result.error ? (
+        <p>Error: {result.error.message}</p>
+      ) : (
+        <div>
+          <h2>Finished Coin Flips</h2>
+          {data.finishedCoinFlips.map(coinFlip => (
+            <div key={coinFlip.id}>
+              <p>ID: {coinFlip.id}</p>
+              <p>Winner: {coinFlip.winner}</p>
+              <p>Block Number: {coinFlip.blockNumber}</p>
+              <p>Block Timestamp: {coinFlip.blockTimestamp}</p>
+            </div>
+          ))}
+          <h2>Started Coin Flips</h2>
+          {data.startedCoinfFlips.map(coinFlip => (
+            <div key={coinFlip.id}>
+              <p>ID: {coinFlip.id}</p>
+              <p>Coin Flip ID: {coinFlip.theCoinFlipID}</p>
+              <p>Block Number: {coinFlip.blockNumber}</p>
+              <p>Block Timestamp: {coinFlip.blockTimestamp}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }
