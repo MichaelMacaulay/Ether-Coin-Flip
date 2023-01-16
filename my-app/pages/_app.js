@@ -1,7 +1,11 @@
 import { createClient, Provider } from 'urql';
+import { graphExchange } from '@graphprotocol/client-urql'
+import * as GraphClient from '../.graphclient'
 
 const client = createClient({
-  url: 'https://api.studio.thegraph.com/query/25902/ether-coin-flip/v0.0.1',
+  url: 'graphclient://dummy',
+  requestPolicy: 'cache-and-network',
+  exchanges: [graphExchange(GraphClient)],
 });
 
 function MyApp({ Component, pageProps }) {

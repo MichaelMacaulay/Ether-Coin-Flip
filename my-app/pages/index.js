@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
 import { useQuery } from 'urql';
+import { useEffect, useState } from 'react';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,10 +23,28 @@ const query = `{
 }`
 
 export default function Home() {
-    const [result] = useQuery({
+  // Common pattern with subgraph devs: reexecuteQuery
+    const [result, reexecuteQuery] = useQuery({
     query: query
   });
   const { data } = result;
+
+  console.log("render", result);
+
+  // Only runs first time when component is mounted
+  // useEffect(() => {
+  //   console.log("setting interval");
+  //   const timer = setInterval(() => {
+  //     console.log("do query");
+  //     reexecuteQuery();
+  //     // setSeconds(seconds + 1);
+  //   }, 12000);
+  //              // clearing interval
+  //   return () => { clearInterval(timer); console.log("clear interval") }
+  // });
+
+  // Bad example
+  // setInterval(() => { console.log("do query"); reexecuteQuery() }, 1000);
 
   return (
     <div>
