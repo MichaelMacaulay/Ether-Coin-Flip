@@ -29,23 +29,6 @@ export default function Home() {
   });
   const { data } = result;
 
-  console.log("render", result);
-
-  // Only runs first time when component is mounted
-  // useEffect(() => {
-  //   console.log("setting interval");
-  //   const timer = setInterval(() => {
-  //     console.log("do query");
-  //     reexecuteQuery();
-  //     // setSeconds(seconds + 1);
-  //   }, 12000);
-  //              // clearing interval
-  //   return () => { clearInterval(timer); console.log("clear interval") }
-  // });
-
-  // Bad example
-  // setInterval(() => { console.log("do query"); reexecuteQuery() }, 1000);
-
   return (
     <div>
       {result.fetching ? (
