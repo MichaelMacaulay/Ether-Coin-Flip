@@ -1,11 +1,6 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '../styles/Home.module.css'
+import { Inter } from '@next/font/google';
 import { useQuery } from 'urql';
-import { useEffect, useState } from 'react';
-
-const inter = Inter({ subsets: ['latin'] })
+import Button from '../components/buttons.js';
 
 const query = `{
   finishedCoinFlips(first: 5) {
@@ -31,6 +26,9 @@ export default function Home() {
 
   return (
     <div>
+          <div>
+      <Button text="Click me" handleClick={() => alert('Button clicked!')} />
+    </div>
       {result.fetching ? (
         <p>Loading...</p>
       ) : result.error ? (
