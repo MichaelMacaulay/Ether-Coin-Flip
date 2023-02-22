@@ -1,6 +1,7 @@
 import { createClient, Provider } from 'urql';
 import { graphExchange } from '@graphprotocol/client-urql'
 import * as GraphClient from '../.graphclient'
+import '../styles/dashboard.css';
 
 const client = createClient({
   url: 'graphclient://dummy',
