@@ -1,7 +1,13 @@
-
+import { createClient, Provider } from 'urql';
+import { graphExchange } from '@graphprotocol/client-urql'
+import * as GraphClient from '../.graphclient'
 import '../styles/dashboard.css';
-import '../styles/button.css';
-import { client } from '../components/dashboard.js';
+
+const client = createClient({
+  url: 'graphclient://dummy',
+  requestPolicy: 'cache-and-network',
+  exchanges: [graphExchange(GraphClient)],
+});
 
 function MyApp({ Component, pageProps }) {
   return (

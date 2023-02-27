@@ -1,13 +1,4 @@
 import { useQuery } from 'urql';
-import { createClient, Provider } from 'urql';
-import { graphExchange } from '@graphprotocol/client-urql'
-import * as GraphClient from '../.graphclient'
-
-const client = createClient({
-    url: 'graphclient://dummy',
-    requestPolicy: 'cache-and-network',
-    exchanges: [graphExchange(GraphClient)],
-});
 
 const query = `{
     finishedCoinFlips(first: 5) {
