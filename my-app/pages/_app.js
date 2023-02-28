@@ -43,10 +43,12 @@ const client = createUrqlClient({
 
 function MyApp({ Component, pageProps }) {
   return (
-          <WagmiConfig client={wagmiClient}>
+    <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
-              <Provider value={client}>
-                <ConnectButton />
+        <Provider value={client}>
+          <div className="flex justify-center mt-20" >  {/* styled with Tailwind (will add tailwind) */}
+            <ConnectButton />
+          </div>
         <Component {...pageProps} />
       </Provider>
       </RainbowKitProvider>

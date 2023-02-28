@@ -1,14 +1,13 @@
 import Dashboard from '../components/dashboard.js';
-import MyButton from '../components/button.js';
+import StartCoinFlip from '../components/startcoinflip.js';
 
 export default function Home() {
 
 
   return (
-          <div>
-                <MyButton>Start coin flip</MyButton>
-                <MyButton>End coin flip</MyButton>
-    <Dashboard/>
+    <div>
+      <StartCoinFlip/>
+        <Dashboard/>
     </div>
   );
 }
