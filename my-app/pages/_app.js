@@ -6,7 +6,7 @@ import {
   getDefaultWallets,
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
-import { configureChains, createClient, WagmiConfig } from 'wagmi';
+import { configureChains, createClient, WagmiConfig, useContractWrite, usePrepareContractWrite } from 'wagmi';
 import { goerli } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
@@ -15,13 +15,10 @@ import '../styles/dashboard.css';
 import '../styles/button.css';
 import ethercoinflip from '../utils/ethercoinflip.json';
 import { ethers } from "ethers";
-import { useContractWrite, usePrepareContractWrite } from 'wagmi'
 
 export const YourApp = () => {
   return <ConnectButton />;
 };
-
-const contractAddress = "0x575fE957730F8Db4635A405daEad4B89544A5907";
 
 const { chains, provider } = configureChains(
   [goerli],
@@ -31,16 +28,13 @@ const { chains, provider } = configureChains(
   ]
 );
 
-
-  const { config } = usePrepareContractWrite({
+const { config } = usePrepareContractWrite({
     address: '0x575fE957730F8Db4635A405daEad4B89544A5907',
     abi: ethercoinflip,
     functionName: 'newCoinFlip',
-  })
+})
 
     const { data, isLoading, isSuccess, write } = useContractWrite(config)
-
-
 
 
 const { connectors } = getDefaultWallets({
@@ -62,11 +56,15 @@ const client = createUrqlClient({
 function MyApp({ Component, pageProps }) {
 
     const { state: transactionState, send } = useContractFunction(EtherCoinFlipContract, "newCoinFlip");
+
+    const [wager, setWager] = useState();
   
-  async function handleFlipCoin(amount) {
-    const value = ethers.utils.parseEther(amount); // convert the amount to wei
+  async function handleFlipCoin(wager) {
+    const value = ethers.utils.parseEther(wager.toString());
     await send({ value });
   }
+
+
 
   return (
     <WagmiConfig client={wagmiClient}>
@@ -76,7 +74,8 @@ function MyApp({ Component, pageProps }) {
             <ConnectButton />
           </div>
           <div>
-      <button onClick={() => handleFlipCoin("0.1")}>Flip Coin for 0.1 Ether</button>
+            <button value={wager} onClick={() => handleFlipCoin(wager)}>Flip ether</button>
+            <input onChange={e => setWager(e.target.value)} placeholder="Eth to wager" />
       {transactionState && (
         <div>
           <p>Transaction Hash: {transactionState.transactionHash}</p>
