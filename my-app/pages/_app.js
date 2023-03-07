@@ -7,7 +7,7 @@ import {
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
 import { configureChains, createClient, WagmiConfig, useContractWrite, usePrepareContractWrite } from 'wagmi';
-import { goerli } from 'wagmi/chains';
+import { goerli } from '@wagmi/core/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
@@ -15,12 +15,12 @@ import '../styles/dashboard.css';
 import '../styles/button.css';
 import ethercoinflip from '../utils/ethercoinflip.json';
 import { ethers } from "ethers";
+import '@rainbow-me/rainbowkit/styles.css';
+import { QueryClient, QueryClientProvider } from "react-query";
 
-export const YourApp = () => {
-  return <ConnectButton />;
-};
+function MyApp({ Component, pageProps }) {
 
-const { chains, provider } = configureChains(
+  const { chains, provider } = configureChains(
   [goerli],
   [
     alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),
@@ -28,19 +28,11 @@ const { chains, provider } = configureChains(
   ]
 );
 
-const { config } = usePrepareContractWrite({
-    address: '0x575fE957730F8Db4635A405daEad4B89544A5907',
-    abi: ethercoinflip,
-    functionName: 'newCoinFlip',
-})
-
-    const { data, isLoading, isSuccess, write } = useContractWrite(config)
-
-
 const { connectors } = getDefaultWallets({
   appName: 'My RainbowKit App',
   chains
 });
+
 const wagmiClient = createClient({
   autoConnect: true,
   connectors,
@@ -53,40 +45,26 @@ const client = createUrqlClient({
   exchanges: [graphExchange(GraphClient)],
 });
 
-function MyApp({ Component, pageProps }) {
+  const { config, error } = usePrepareContractWrite({
+    address: '0x575fE957730F8Db4635A405daEad4B89544A5907',
+    abi: ethercoinflip,
+    functionName: 'newCoinFlip',
+  })
 
-    const { state: transactionState, send } = useContractFunction(EtherCoinFlipContract, "newCoinFlip");
-
-    const [wager, setWager] = useState();
-  
-  async function handleFlipCoin(wager) {
-    const value = ethers.utils.parseEther(wager.toString());
-    await send({ value });
-  }
-
-
+const { data, isLoading, isSuccess, write } = useContractWrite(config)
 
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
         <Provider value={client}>
-          <div>
             <ConnectButton />
-          </div>
-          <div>
-            <button value={wager} onClick={() => handleFlipCoin(wager)}>Flip ether</button>
-            <input onChange={e => setWager(e.target.value)} placeholder="Eth to wager" />
-      {transactionState && (
-        <div>
-          <p>Transaction Hash: {transactionState.transactionHash}</p>
-          <p>Status: {transactionState.status}</p>
-        </div>
-      )}
-    </div>
+            <input type="number" placeholder="eth wager" />
+            <button className="button">flip coin</button>
         <Component {...pageProps} />
       </Provider>
       </RainbowKitProvider>
     </WagmiConfig>
+
 
   );
 }
