@@ -589,7 +589,7 @@ const etherCoinFlipTransforms = [];
 const additionalTypeDefs = [] as any[];
 const etherCoinFlipHandler = new GraphqlHandler({
               name: "Ether-Coin-Flip",
-              config: {"endpoint":"https://api.studio.thegraph.com/query/25902/ether-coin-flip/v0.0.1"},
+              config: {"endpoint":"https://api.studio.thegraph.com/query/25902/goerlie-ether-coin-flip/v0.0.1"},
               baseDir,
               cache,
               pubsub,

@@ -1,11 +1,37 @@
-import { useQuery, createClient as createUrqlClient, Provider } from 'urql';
+import { createClient as createUrqlClient, Provider, useQuery } from 'urql';
 import { graphExchange } from '@graphprotocol/client-urql'
-import { endCoinFlip } from './endCoinFlip';
+import * as GraphClient from '../.graphclient'
+
+const exampleQuery = `{
+finishedCoinFlips(first: 5) {
+    id
+    winner
+    blockNumber
+    blockTimestamp
+}
+startedCoinfFlips(first: 5) {
+    id
+    theCoinFlipID
+    blockNumber
+    blockTimestamp
+}
+}`
+
+const client = createUrqlClient({
+    url: 'graphclient://dummy',
+    requestPolicy: 'cache-and-network',
+    exchanges: [graphExchange(GraphClient)],
+});
 
 const Dashboard = () => {
 
+    const [result, reexecuteQuery] = useQuery({
+        exampleQuery,
+    });
+    const { data, fetching, error } = result;
+
     return (
-        <div className="dashboard-container">
+                <div className="dashboard-container">
         <h1 className="dashboard-title">Dashboard</h1>
         {fetching && <div className="dashboard-loading">Loading...</div>}
         {error && <div className="dashboard-error">{error.message}</div>}
