@@ -1,0 +1,14 @@
+query ExampleQuery {
+  finishedCoinFlips(first: 5) {
+    id
+    winner
+    blockNumber
+    blockTimestamp
+  }
+  startedCoinfFlips(first: 5) {
+    id
+    theCoinFlipID
+    blockNumber
+    blockTimestamp
+  }
+}
