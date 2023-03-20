@@ -9,6 +9,7 @@ import { createClient as createUrqlClient, Provider, useQuery } from 'urql';
 import { graphExchange } from '@graphprotocol/client-urql';
 import * as GraphClient from '../.graphclient';
 import etherCoinFlipABI from './utils/etherCoinFlipABI.json';
+import { ethers } from "ethers";
 
 const { chains, provider, webSocketProvider } = configureChains(
   [
@@ -50,12 +51,6 @@ const client = createUrqlClient({
     requestPolicy: 'cache-and-network',
     exchanges: [graphExchange(GraphClient)],
 });
-
-  const { config, error } = usePrepareContractWrite({
-    address: '0x575fE957730F8Db4635A405daEad4B89544A5907',
-    abi: etherCoinFlipABI,
-    functionName: 'newCoinFlip',
-  })
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

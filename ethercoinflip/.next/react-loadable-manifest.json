@@ -166,5 +166,11 @@
     "files": [
       "static/chunks/node_modules_walletconnect_legacy-provider_dist_esm_index_js.js"
     ]
+  },
+  "index.tsx -> ./components/startCoinFlipButton": {
+    "id": "index.tsx -> ./components/startCoinFlipButton",
+    "files": [
+      "static/chunks/pages_components_startCoinFlipButton_tsx.js"
+    ]
   }
 }
