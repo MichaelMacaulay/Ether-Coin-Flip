@@ -2,9 +2,13 @@ import '../styles/globals.css';
 import '@rainbow-me/rainbowkit/styles.css';
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import type { AppProps } from 'next/app';
-import { configureChains, createClient, WagmiConfig } from 'wagmi';
+import { configureChains, createClient, WagmiConfig, usePrepareContractWrite, useContractWrite } from 'wagmi';
 import { goerli } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
+import { createClient as createUrqlClient, Provider, useQuery } from 'urql';
+import { graphExchange } from '@graphprotocol/client-urql';
+import * as GraphClient from '../.graphclient';
+import etherCoinFlipABI from './utils/etherCoinFlipABI.json';
 
 const { chains, provider, webSocketProvider } = configureChains(
   [
@@ -26,11 +30,40 @@ const wagmiClient = createClient({
   webSocketProvider,
 });
 
+const exampleQuery = `{
+finishedCoinFlips(first: 5) {
+    id
+    winner
+    blockNumber
+    blockTimestamp
+}
+startedCoinfFlips(first: 5) {
+    id
+    theCoinFlipID
+    blockNumber
+    blockTimestamp
+}
+}`
+
+const client = createUrqlClient({
+    url: 'graphclient://dummy',
+    requestPolicy: 'cache-and-network',
+    exchanges: [graphExchange(GraphClient)],
+});
+
+  const { config, error } = usePrepareContractWrite({
+    address: '0x575fE957730F8Db4635A405daEad4B89544A5907',
+    abi: etherCoinFlipABI,
+    functionName: 'newCoinFlip',
+  })
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
-        <Component {...pageProps} />
+        <Provider value={client}>
+          <Component {...pageProps} />
+        </Provider>
       </RainbowKitProvider>
     </WagmiConfig>
   );
