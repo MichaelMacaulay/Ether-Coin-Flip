@@ -8,6 +8,10 @@ const StartCoinFlipButton = dynamic(() => import("./components/startCoinFlipButt
   ssr: false,
 });
 
+const EndCoinFlip = dynamic(() => import("./components/endCoinFlip"), {
+  ssr: false,
+});
+
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
@@ -22,6 +26,8 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <StartCoinFlipButton />
+        <br />
+        <EndCoinFlip />
       </main>
 
       <footer className={styles.footer}>
