@@ -4,29 +4,30 @@ import { ethers } from 'ethers';
 import { useState } from 'react';
 
 export default function StartCoinFlipButton() {
-
 const [etherInput, setEtherInput] = useState('0');
+
+const value = isNaN(parseFloat(etherInput)) ? undefined : ethers.utils.parseEther(etherInput.toString());
 
 const { config } = usePrepareContractWrite({
     address: '0x575fE957730F8Db4635A405daEad4B89544A5907',
     abi: etherCoinFlipABI,
     functionName: 'newCoinFlip',
-    overrides: {value: ethers.utils.parseEther(etherInput.toString())}
+    overrides: { value }
 });
 
 const { data, isLoading, isSuccess, write } = useContractWrite(config);
 
-console.log(etherInput);
-
-    return(
-        <div>
-            <input type="number" placeholder='ETH to wager' onChange={e => setEtherInput(e.target.value)} />
-            <button disabled={!write} onClick={() => write?.()} value={etherInput}>
-        Feed
+return (
+    <div>
+        <input type="number" step="any" placeholder='ETH to wager' onChange={e => {
+        const value = e.target.value;
+        if (!isNaN(parseFloat(value))) {
+            setEtherInput(value);
+        }
+    }} />
+    <button disabled={!write} onClick={() => write?.()} value={etherInput}>
+        Flip coin
     </button>
-        </div>
-    )
-
+    </div>
+)
 }
-
-
