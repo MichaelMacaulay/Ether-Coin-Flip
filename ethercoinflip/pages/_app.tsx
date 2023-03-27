@@ -6,6 +6,7 @@ import { configureChains, createClient, WagmiConfig, usePrepareContractWrite, us
 import { goerli } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { createClient as createUrqlClient, Provider, useQuery } from 'urql';
+import { dedupExchange, cacheExchange, fetchExchange, ssrExchange } from '@urql/core';
 import { graphExchange } from '@graphprotocol/client-urql';
 import * as GraphClient from '../.graphclient';
 import etherCoinFlipABI from './utils/etherCoinFlipABI.json';
@@ -46,11 +47,36 @@ startedCoinfFlips(first: 5) {
 }
 }`
 
-const client = createUrqlClient({
-    url: 'graphclient://dummy',
-    requestPolicy: 'cache-and-network',
-    exchanges: [graphExchange(GraphClient)],
+const isServerSide = typeof window === 'undefined';
+
+// The `ssrExchange` must be initialized with `isClient` and `initialState`
+const ssr = ssrExchange({
+  isClient: !isServerSide,
+  initialState: !isServerSide ? window.__URQL_DATA__ : undefined,
 });
+
+const client = createUrqlClient({
+    url: 'https://api.studio.thegraph.com/query/25902/goerlie-ether-coin-flip/v0.0.1',
+    requestPolicy: 'cache-and-network',
+    exchanges: [
+      graphExchange(GraphClient),
+        dedupExchange,
+        cacheExchange,
+        ssr, // Add `ssr` in front of the `fetchExchange`
+        fetchExchange,
+    ],
+});
+
+
+
+
+  const [result] = useQuery({
+    query: exampleQuery,
+  });
+
+  const { data, fetching, error } = result;
+
+  console.log(result);
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

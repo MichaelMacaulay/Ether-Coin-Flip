@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import dynamic from 'next/dynamic';
+import Dashboard from './components/dashboard';
 
 const StartCoinFlipButton = dynamic(() => import("./components/startCoinFlipButton"), {
   ssr: false,
@@ -28,6 +29,8 @@ const Home: NextPage = () => {
         <StartCoinFlipButton />
         <br />
         <EndCoinFlip />
+
+        <Dashboard />
       </main>
 
       <footer className={styles.footer}>
