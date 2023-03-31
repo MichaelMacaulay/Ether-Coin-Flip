@@ -69,8 +69,9 @@ const client = createUrqlClient({
 
 
 
-
-  const [result] = useQuery({
+function MyApp({ Component, pageProps }: AppProps) {
+  
+  const result = useQuery({
     query: exampleQuery,
   });
 
@@ -78,7 +79,6 @@ const client = createUrqlClient({
 
   console.log(result);
 
-function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
