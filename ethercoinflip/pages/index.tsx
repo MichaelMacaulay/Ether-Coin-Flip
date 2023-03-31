@@ -13,6 +13,12 @@ const EndCoinFlip = dynamic(() => import("./components/endCoinFlip"), {
   ssr: false,
 });
 
+const coinFlips = [
+  { value: 0.1, flippedBy: '0xabc123', txHash: '0xdef456' },
+  { value: 0.2, flippedBy: '0x123abc', txHash: '0x456def' },
+  { value: 0.3, flippedBy: '0xcba321', txHash: '0xfed654' },
+];
+
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
@@ -30,7 +36,7 @@ const Home: NextPage = () => {
         <br />
         <EndCoinFlip />
 
-        <Dashboard />
+        <Dashboard coinFlips={coinFlips}/>
       </main>
 
       <footer className={styles.footer}>
