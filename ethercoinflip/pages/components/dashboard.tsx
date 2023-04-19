@@ -11,7 +11,9 @@ import EndCoinFlip from "./endCoinFlip";
     coinFlips: CoinFlip[] | undefined;
     };
 
+
     export default function Dashboard({ coinFlips }: DashboardProps) {
+            console.log('coinFlips:', coinFlips);
     return (
         <div>
         <h1>Dashboard</h1>

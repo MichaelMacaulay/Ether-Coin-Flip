@@ -25,7 +25,16 @@ const exampleQuery = `{
   }
 }`;
 
-const Home: NextPage = ({ coinFlips }) => {
+const Home: NextPage = () =>  {
+
+  type HomeProps = {
+  result: {
+    data: any;
+    fetching: boolean;
+    error: any;
+  };
+};
+
   const [result] = useQuery({ query: exampleQuery });
   const { data, fetching, error } = result;
 
@@ -46,7 +55,7 @@ const Home: NextPage = ({ coinFlips }) => {
       <main className={styles.main}>
         <StartCoinFlipButton />
         <br />
-        <Dashboard coinFlips={coinFlips}/>
+        <Dashboard coinFlips={result.data?.startedCoinfFlips} />
       </main>
 
       <footer className={styles.footer}>
