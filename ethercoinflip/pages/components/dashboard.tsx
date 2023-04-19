@@ -22,8 +22,9 @@ import EndCoinFlip from "./endCoinFlip";
                 <li key={coinFlip.txHash}>
                     Coin flip value: {coinFlip.value}, flipped by: {coinFlip.flippedBy}
                     <br />
+                    The coin flip ID is {coinFlip.coinFlipID}
                     Etherscan transaction: <a href={`https://etherscan.io/tx/${coinFlip.txHash}`} target="_blank" rel="noopener noreferrer">{coinFlip.txHash}</a>
-                    <EndCoinFlip coinFlipID={coinFlip.coinFlipID}/>
+                    <EndCoinFlip coinFlipID={coinFlip.coinFlipID}/> 
                 </li>
                 ))}
             </ul>

@@ -14,12 +14,12 @@ const EndCoinFlip = dynamic(() => import("./components/endCoinFlip"), {
 });
 
 const coinFlips = [
-  { value: 0.1, flippedBy: '0xabc123', txHash: '0xdef456' },
-  { value: 0.2, flippedBy: '0x123abc', txHash: '0x456def' },
-  { value: 0.3, flippedBy: '0xcba321', txHash: '0xfed654' },
+  { value: 0.1, flippedBy: '0xabc123', txHash: '0xdef456', coinFlipID: 1 },
+  { value: 0.2, flippedBy: '0x123abc', txHash: '0x456def', coinFlipID: 1  },
+  { value: 0.3, flippedBy: '0xcba321', txHash: '0xfed654', coinFlipID: 1  },
 ];
 
-const Home: NextPage = () => {
+const Home: NextPage = ({ coinFlips }) => {
   return (
     <div className={styles.container}>
       <Head>

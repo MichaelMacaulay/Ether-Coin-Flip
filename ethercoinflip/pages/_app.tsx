@@ -9,8 +9,7 @@ import { createClient as createUrqlClient, Provider, useQuery } from 'urql';
 import { dedupExchange, cacheExchange, fetchExchange, ssrExchange } from '@urql/core';
 import { graphExchange } from '@graphprotocol/client-urql';
 import * as GraphClient from '../.graphclient';
-import etherCoinFlipABI from './utils/etherCoinFlipABI.json';
-import { ethers } from "ethers";
+import Home from './index';
 
 const { chains, provider, webSocketProvider } = configureChains(
   [
@@ -81,7 +80,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
         <Provider value={client}>
-          <Component {...pageProps} />
+          {Component === Home ? <Home coinFlips={data?.startedCoinFlips} /> : <Component {...pageProps} />}
         </Provider>
       </RainbowKitProvider>
     </WagmiConfig>

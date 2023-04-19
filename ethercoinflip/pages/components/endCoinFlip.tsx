@@ -17,7 +17,7 @@ const { data, isLoading, isSuccess, write } = useContractWrite(config);
 
     return (
         <div>
-                <button disabled={!write} onClick={() => write?.()}>End Coin Flip</button>
+                <button disabled={!write || isLoading} onClick={() => write?.()}>End Coin Flip</button>
         </div>
     );
 }
