@@ -77,8 +77,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const { data, fetching, error } = result;
 
-  console.log(result);
-
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
