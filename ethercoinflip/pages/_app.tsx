@@ -31,21 +31,6 @@ const wagmiClient = createClient({
   webSocketProvider,
 });
 
-const exampleQuery = `{
-finishedCoinFlips(first: 5) {
-    id
-    winner
-    blockNumber
-    blockTimestamp
-}
-startedCoinfFlips(first: 5) {
-    id
-    theCoinFlipID
-    blockNumber
-    blockTimestamp
-}
-}`
-
 const isServerSide = typeof window === 'undefined';
 
 // The `ssrExchange` must be initialized with `isClient` and `initialState`
@@ -67,20 +52,13 @@ const client = createUrqlClient({
 });
 
 
-
 function MyApp({ Component, pageProps }: AppProps) {
-  
-  const result = useQuery({
-    query: exampleQuery,
-  });
-
-  const { data, fetching, error } = result;
 
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
         <Provider value={client}>
-          {Component === Home ? <Home coinFlips={data?.startedCoinFlips} /> : <Component {...pageProps} />}
+          <Component {...pageProps} />
         </Provider>
       </RainbowKitProvider>
     </WagmiConfig>

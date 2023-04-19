@@ -1,10 +1,10 @@
 import EndCoinFlip from "./endCoinFlip";
     
     type CoinFlip = {
-    coinFlipID: number;
-    value: number;
-    flippedBy: string;
-    txHash: string;
+        id: string;
+        theCoinFlipID: number;
+        blockNumber: number;
+        blockTimestamp: number;
     };
 
     type DashboardProps = {
@@ -19,14 +19,12 @@ import EndCoinFlip from "./endCoinFlip";
             {coinFlips ? (
             <ul>
                 {coinFlips.map((coinFlip) => (
-                <li key={coinFlip.txHash}>
-                    Coin flip value: {coinFlip.value}, flipped by: {coinFlip.flippedBy}
-                    <br />
-                    The coin flip ID is {coinFlip.coinFlipID}
-                    Etherscan transaction: <a href={`https://etherscan.io/tx/${coinFlip.txHash}`} target="_blank" rel="noopener noreferrer">{coinFlip.txHash}</a>
-                    <EndCoinFlip coinFlipID={coinFlip.coinFlipID}/> 
-                </li>
-                ))}
+            <li key={coinFlip.id}>
+                Coin flip ID: {coinFlip.theCoinFlipID}, block number: {coinFlip.blockNumber}, block timestamp: {coinFlip.blockTimestamp}
+                <br />
+                <EndCoinFlip coinFlipID={coinFlip.theCoinFlipID} />
+            </li>
+            ))}
             </ul>
             ) : (
             <p>No coin flips found.</p>

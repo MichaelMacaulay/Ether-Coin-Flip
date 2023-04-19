@@ -4,22 +4,34 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import dynamic from 'next/dynamic';
 import Dashboard from './components/dashboard';
+import { useQuery } from 'urql';
 
 const StartCoinFlipButton = dynamic(() => import("./components/startCoinFlipButton"), {
   ssr: false,
 });
 
-const EndCoinFlip = dynamic(() => import("./components/endCoinFlip"), {
-  ssr: false,
-});
-
-const coinFlips = [
-  { value: 0.1, flippedBy: '0xabc123', txHash: '0xdef456', coinFlipID: 1 },
-  { value: 0.2, flippedBy: '0x123abc', txHash: '0x456def', coinFlipID: 1  },
-  { value: 0.3, flippedBy: '0xcba321', txHash: '0xfed654', coinFlipID: 1  },
-];
+const exampleQuery = `{
+  finishedCoinFlips(first: 5) {
+    id
+    winner
+    blockNumber
+    blockTimestamp
+  }
+  startedCoinfFlips(first: 5) {
+    id
+    theCoinFlipID
+    blockNumber
+    blockTimestamp
+  }
+}`;
 
 const Home: NextPage = ({ coinFlips }) => {
+  const [result] = useQuery({ query: exampleQuery });
+  const { data, fetching, error } = result;
+
+    console.log('Data:', data, 'Fetching:', fetching, 'Error:', error);
+
+
   return (
     <div className={styles.container}>
       <Head>
