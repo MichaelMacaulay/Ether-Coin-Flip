@@ -34,8 +34,6 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <StartCoinFlipButton />
         <br />
-        <EndCoinFlip />
-
         <Dashboard coinFlips={coinFlips}/>
       </main>
 

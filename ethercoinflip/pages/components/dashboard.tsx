@@ -1,4 +1,7 @@
+import EndCoinFlip from "./endCoinFlip";
+    
     type CoinFlip = {
+    coinFlipID: number;
     value: number;
     flippedBy: string;
     txHash: string;
@@ -17,9 +20,10 @@
             <ul>
                 {coinFlips.map((coinFlip) => (
                 <li key={coinFlip.txHash}>
-                    Coin flip value: {coinFlip.value}, flipped by user: {coinFlip.flippedBy}
+                    Coin flip value: {coinFlip.value}, flipped by: {coinFlip.flippedBy}
                     <br />
                     Etherscan transaction: <a href={`https://etherscan.io/tx/${coinFlip.txHash}`} target="_blank" rel="noopener noreferrer">{coinFlip.txHash}</a>
+                    <EndCoinFlip coinFlipID={coinFlip.coinFlipID}/>
                 </li>
                 ))}
             </ul>
