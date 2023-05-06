@@ -3,7 +3,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import type { AppProps } from 'next/app';
 import { configureChains, createClient, WagmiConfig, usePrepareContractWrite, useContractWrite } from 'wagmi';
-import { goerli } from 'wagmi/chains';
+import { sepolia } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { createClient as createUrqlClient, Provider, useQuery } from 'urql';
 import { dedupExchange, cacheExchange, fetchExchange, ssrExchange } from '@urql/core';
@@ -13,8 +13,8 @@ import Home from './index';
 
 const { chains, provider, webSocketProvider } = configureChains(
   [
-    goerli,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [goerli] : []),
+    sepolia,
+    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
   ],
   [publicProvider()]
 );
