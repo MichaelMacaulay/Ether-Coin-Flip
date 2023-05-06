@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.19;
+
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract EtherCoinFlip {
+    using SafeMath for uint256;
 
     struct EtherCoinFlipStruct {
         uint256 ID;
@@ -14,53 +17,51 @@ contract EtherCoinFlip {
         address payable loser;
     }
 
-    uint256 numCoinFlips = 300;
+    uint256 numberOfCoinFlips = 1;
     mapping(uint256 => EtherCoinFlipStruct) public EtherCoinFlipStructs;
 
-    event startedCoinfFlip(uint256 indexed theCoinFlipID);
+    event startedCoinfFlip(uint256 indexed theCoinFlipID, address indexed theBetStarter, uint256 theStartingWager);
+    event finishedCoinFlip(address indexed winner, address indexed loser);
 
-    // Start the Ether coin flip
     function newCoinFlip() public payable returns (uint256 coinFlipID) {
-        address theBetStarter = msg.sender;
-        address payable player1 = payable(theBetStarter);
-        coinFlipID = numCoinFlips++;
+        address payable player1 = payable(msg.sender);
+        coinFlipID = numberOfCoinFlips;
+        numberOfCoinFlips = numberOfCoinFlips.add(1);
         EtherCoinFlipStructs[coinFlipID] = EtherCoinFlipStruct(
             coinFlipID,
             player1,
             msg.value,
-            player1,
-            msg.value,
+            payable(address(0)),
             0,
-            player1,
-            player1
+            0,
+            payable(address(0)),
+            payable(address(0))
         );
-        emit startedCoinfFlip(coinFlipID);
+        emit startedCoinfFlip(coinFlipID, player1, msg.value);
     }
 
-    event finishedCoinFlip(address indexed winner);
-
-    // End the coin flip
     function endCoinFlip(uint256 coinFlipID) public payable {
-        EtherCoinFlipStruct storage c = EtherCoinFlipStructs[coinFlipID];
-        address theBetender = msg.sender;
-        address payable player2 = payable(theBetender);
+    EtherCoinFlipStruct storage c = EtherCoinFlipStructs[coinFlipID];
+    address payable player2 = payable(msg.sender);
 
-        require(coinFlipID == c.ID, "Invalid coin flip ID");
-        require(msg.value == c.startingWager, "Invalid wager amount");
+    require(coinFlipID == c.ID, "Invalid coin flip ID");
 
-        c.betEnder = player2;
-        c.endingWager = msg.value;
-        c.etherTotal = c.startingWager + c.endingWager;
+    c.betEnder = player2;
+    c.endingWager = msg.value;
+    c.etherTotal = c.startingWager.add(c.endingWager);
 
-        uint256 randomResult = block.difficulty + block.chainid + block.gaslimit + block.number + block.timestamp;
+    bytes32 randomHash = keccak256(abi.encodePacked(block.chainid, block.gaslimit, block.number, block.timestamp, msg.sender));
+    uint256 randomResult = uint256(randomHash);
 
-        if ((randomResult % 2) == 0) {
-            c.winner = c.betStarter;
-        } else {
-            c.winner = c.betEnder;
-        }
-
-        c.winner.transfer(c.etherTotal);
-        emit finishedCoinFlip(c.winner);
+    if ((randomResult % 2) == 0) {
+        c.winner = c.betStarter;
+        c.loser = c.betEnder;
+    } else {
+        c.winner = c.betEnder;
+        c.loser = c.betStarter;
     }
+
+    c.winner.transfer(c.etherTotal);
+    emit finishedCoinFlip(c.winner, c.loser);
+}
 }
