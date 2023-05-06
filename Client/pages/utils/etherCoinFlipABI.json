@@ -1,5 +1,18 @@
 [
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "coinFlipID",
+				"type": "uint256"
+			}
+		],
+		"name": "endCoinFlip",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -7,10 +20,29 @@
 				"internalType": "address",
 				"name": "winner",
 				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "loser",
+				"type": "address"
 			}
 		],
 		"name": "finishedCoinFlip",
 		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "newCoinFlip",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "coinFlipID",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "payable",
+		"type": "function"
 	},
 	{
 		"anonymous": false,
@@ -19,6 +51,18 @@
 				"indexed": true,
 				"internalType": "uint256",
 				"name": "theCoinFlipID",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "theBetStarter",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "theStartingWager",
 				"type": "uint256"
 			}
 		],
@@ -77,32 +121,6 @@
 			}
 		],
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "coinFlipID",
-				"type": "uint256"
-			}
-		],
-		"name": "endCoinFlip",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "newCoinFlip",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "coinFlipID",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "payable",
 		"type": "function"
 	}
 ]

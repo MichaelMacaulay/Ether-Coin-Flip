@@ -2,7 +2,7 @@ import '../styles/globals.css';
 import '@rainbow-me/rainbowkit/styles.css';
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import type { AppProps } from 'next/app';
-import { configureChains, createClient, WagmiConfig, usePrepareContractWrite, useContractWrite } from 'wagmi';
+import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { sepolia } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { createClient as createUrqlClient, Provider, useQuery } from 'urql';

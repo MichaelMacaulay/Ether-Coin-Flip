@@ -14,26 +14,18 @@ const exampleQuery = `{
   finishedCoinFlips(first: 5) {
     id
     winner
+    loser
     blockNumber
-    blockTimestamp
   }
   startedCoinfFlips(first: 5) {
     id
     theCoinFlipID
-    blockNumber
-    blockTimestamp
+    theBetStarter
+    theStartingWager
   }
 }`;
 
 const Home: NextPage = () =>  {
-
-  type HomeProps = {
-  result: {
-    data: any;
-    fetching: boolean;
-    error: any;
-  };
-};
 
   const [result] = useQuery({ query: exampleQuery });
   const { data, fetching, error } = result;
@@ -55,7 +47,7 @@ const Home: NextPage = () =>  {
       <main className={styles.main}>
         <StartCoinFlipButton />
         <br />
-        <Dashboard coinFlips={result.data?.startedCoinfFlips} />
+        <Dashboard coinFlips={result.data?.startedCoinFlips} />
       </main>
 
       <footer className={styles.footer}>
