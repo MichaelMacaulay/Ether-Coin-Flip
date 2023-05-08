@@ -1,11 +1,12 @@
 import EndCoinFlip from "./endCoinFlip";
-    
+
     type CoinFlip = {
-        id: string;
-        theCoinFlipID: number;
-        blockNumber: number;
-        blockTimestamp: number;
+    id: string;
+    theCoinFlipID: number;
+    theBetStarter: string;
+    theStartingWager: string;
     };
+
 
     type DashboardProps = {
     coinFlips: CoinFlip[] | undefined;
@@ -22,7 +23,7 @@ import EndCoinFlip from "./endCoinFlip";
             <ul>
                 {coinFlips.map((coinFlip) => (
             <li key={coinFlip.id}>
-                Coin flip ID: {coinFlip.theCoinFlipID}, block number: {coinFlip.blockNumber}, block timestamp: {coinFlip.blockTimestamp}
+                Coin flip ID: {coinFlip.theCoinFlipID}, block number: {coinFlip.theBetStarter}, block timestamp: {coinFlip.theStartingWager}
                 <br />
                 <EndCoinFlip coinFlipID={coinFlip.theCoinFlipID} />
             </li>

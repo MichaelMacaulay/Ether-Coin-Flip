@@ -11,12 +11,6 @@ const StartCoinFlipButton = dynamic(() => import("./components/startCoinFlipButt
 });
 
 const exampleQuery = `{
-  finishedCoinFlips(first: 5) {
-    id
-    winner
-    loser
-    blockNumber
-  }
   startedCoinFlips(first: 5) {
     id
     theCoinFlipID
