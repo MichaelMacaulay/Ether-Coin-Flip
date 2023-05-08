@@ -1,38 +1,39 @@
+import { ethers } from 'ethers';
 import EndCoinFlip from "./endCoinFlip";
 
-    type CoinFlip = {
+type CoinFlip = {
     id: string;
     theCoinFlipID: number;
     theBetStarter: string;
     theStartingWager: string;
-    };
+};
 
-
-    type DashboardProps = {
+type DashboardProps = {
     coinFlips: CoinFlip[] | undefined;
-    };
+};
 
-
-    export default function Dashboard({ coinFlips }: DashboardProps) {
-            console.log('coinFlips:', coinFlips);
+export default function Dashboard({ coinFlips }: DashboardProps) {
     return (
-        <div>
+    <div>
         <h1>Dashboard</h1>
         <div>
-            {coinFlips ? (
+        {coinFlips ? (
             <ul>
-                {coinFlips.map((coinFlip) => (
-            <li key={coinFlip.id}>
-                Coin flip ID: {coinFlip.theCoinFlipID}, block number: {coinFlip.theBetStarter}, block timestamp: {coinFlip.theStartingWager}
-                <br />
-                <EndCoinFlip coinFlipID={coinFlip.theCoinFlipID} />
-            </li>
-            ))}
+            {coinFlips.map((coinFlip) => {
+                const etherWager = ethers.utils.formatEther(coinFlip.theStartingWager);
+                return (
+                <li key={coinFlip.id}>
+                    Coin flip ID: {coinFlip.theCoinFlipID}, Coin flip starter: {coinFlip.theBetStarter}, Wager: {etherWager} ether
+                    <br />
+                    <EndCoinFlip coinFlipID={coinFlip.theCoinFlipID} />
+                </li>
+                );
+            })}
             </ul>
-            ) : (
+        ) : (
             <p>No coin flips found.</p>
-            )}
+        )}
         </div>
-        </div>
+    </div>
     );
-    }
+}

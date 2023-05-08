@@ -6,8 +6,6 @@ import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { sepolia } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { createClient as createUrqlClient, Provider, useQuery } from 'urql';
-import { graphExchange } from '@graphprotocol/client-urql';
-import * as GraphClient from '../.graphclient';
 import Home from './index';
 
 const { chains, provider, webSocketProvider } = configureChains(
@@ -29,9 +27,6 @@ const wagmiClient = createClient({
   provider,
   webSocketProvider,
 });
-
-const isServerSide = typeof window === 'undefined';
-
 
 const client = createUrqlClient({
     url: 'https://api.studio.thegraph.com/query/25902/updated-ether-coin-flip/v0.0.3',
