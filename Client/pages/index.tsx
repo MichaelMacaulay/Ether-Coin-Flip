@@ -17,7 +17,7 @@ const exampleQuery = `{
     loser
     blockNumber
   }
-  startedCoinfFlips(first: 5) {
+  startedCoinFlips(first: 5) {
     id
     theCoinFlipID
     theBetStarter

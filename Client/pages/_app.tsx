@@ -40,7 +40,7 @@ const ssr = ssrExchange({
 });
 
 const client = createUrqlClient({
-    url: 'https://api.studio.thegraph.com/query/25902/updated-ether-coin-flip/v0.0.2',
+    url: 'https://api.studio.thegraph.com/query/25902/updated-ether-coin-flip/v0.0.3',
     requestPolicy: 'cache-and-network',
     exchanges: [
       graphExchange(GraphClient),
