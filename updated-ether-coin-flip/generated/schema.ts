@@ -29,6 +29,12 @@ export class finishedCoinFlip extends Entity {
     }
   }
 
+  static loadInBlock(id: Bytes): finishedCoinFlip | null {
+    return changetype<finishedCoinFlip | null>(
+      store.get_in_block("finishedCoinFlip", id.toHexString())
+    );
+  }
+
   static load(id: Bytes): finishedCoinFlip | null {
     return changetype<finishedCoinFlip | null>(
       store.get("finishedCoinFlip", id.toHexString())
@@ -72,6 +78,19 @@ export class finishedCoinFlip extends Entity {
 
   set loser(value: Bytes) {
     this.set("loser", Value.fromBytes(value));
+  }
+
+  get isFinished(): boolean {
+    let value = this.get("isFinished");
+    if (!value || value.kind == ValueKind.NULL) {
+      return false;
+    } else {
+      return value.toBoolean();
+    }
+  }
+
+  set isFinished(value: boolean) {
+    this.set("isFinished", Value.fromBoolean(value));
   }
 
   get blockNumber(): BigInt {
@@ -132,6 +151,12 @@ export class startedCoinFlip extends Entity {
     }
   }
 
+  static loadInBlock(id: Bytes): startedCoinFlip | null {
+    return changetype<startedCoinFlip | null>(
+      store.get_in_block("startedCoinFlip", id.toHexString())
+    );
+  }
+
   static load(id: Bytes): startedCoinFlip | null {
     return changetype<startedCoinFlip | null>(
       store.get("startedCoinFlip", id.toHexString())
@@ -188,6 +213,19 @@ export class startedCoinFlip extends Entity {
 
   set theStartingWager(value: BigInt) {
     this.set("theStartingWager", Value.fromBigInt(value));
+  }
+
+  get isFinished(): boolean {
+    let value = this.get("isFinished");
+    if (!value || value.kind == ValueKind.NULL) {
+      return false;
+    } else {
+      return value.toBoolean();
+    }
+  }
+
+  set isFinished(value: boolean) {
+    this.set("isFinished", Value.fromBoolean(value));
   }
 
   get blockNumber(): BigInt {

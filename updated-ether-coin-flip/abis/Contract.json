@@ -22,6 +22,12 @@
         "internalType": "address",
         "name": "loser",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "isFinished",
+        "type": "bool"
       }
     ],
     "name": "finishedCoinFlip",
@@ -56,6 +62,12 @@
         "internalType": "uint256",
         "name": "theStartingWager",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "isFinished",
+        "type": "bool"
       }
     ],
     "name": "startedCoinFlip",
@@ -84,7 +96,8 @@
         "name": "winner",
         "type": "address"
       },
-      { "internalType": "address payable", "name": "loser", "type": "address" }
+      { "internalType": "address payable", "name": "loser", "type": "address" },
+      { "internalType": "bool", "name": "isFinished", "type": "bool" }
     ],
     "stateMutability": "view",
     "type": "function"

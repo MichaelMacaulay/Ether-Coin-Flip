@@ -30,6 +30,10 @@ export class finishedCoinFlip__Params {
   get loser(): Address {
     return this._event.parameters[1].value.toAddress();
   }
+
+  get isFinished(): boolean {
+    return this._event.parameters[2].value.toBoolean();
+  }
 }
 
 export class startedCoinFlip extends ethereum.Event {
@@ -56,6 +60,10 @@ export class startedCoinFlip__Params {
   get theStartingWager(): BigInt {
     return this._event.parameters[2].value.toBigInt();
   }
+
+  get isFinished(): boolean {
+    return this._event.parameters[3].value.toBoolean();
+  }
 }
 
 export class Contract__EtherCoinFlipStructsResult {
@@ -67,6 +75,7 @@ export class Contract__EtherCoinFlipStructsResult {
   value5: BigInt;
   value6: Address;
   value7: Address;
+  value8: boolean;
 
   constructor(
     value0: BigInt,
@@ -76,7 +85,8 @@ export class Contract__EtherCoinFlipStructsResult {
     value4: BigInt,
     value5: BigInt,
     value6: Address,
-    value7: Address
+    value7: Address,
+    value8: boolean
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -86,6 +96,7 @@ export class Contract__EtherCoinFlipStructsResult {
     this.value5 = value5;
     this.value6 = value6;
     this.value7 = value7;
+    this.value8 = value8;
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
@@ -98,6 +109,7 @@ export class Contract__EtherCoinFlipStructsResult {
     map.set("value5", ethereum.Value.fromUnsignedBigInt(this.value5));
     map.set("value6", ethereum.Value.fromAddress(this.value6));
     map.set("value7", ethereum.Value.fromAddress(this.value7));
+    map.set("value8", ethereum.Value.fromBoolean(this.value8));
     return map;
   }
 
@@ -132,6 +144,10 @@ export class Contract__EtherCoinFlipStructsResult {
   getLoser(): Address {
     return this.value7;
   }
+
+  getIsFinished(): boolean {
+    return this.value8;
+  }
 }
 
 export class Contract extends ethereum.SmartContract {
@@ -142,7 +158,7 @@ export class Contract extends ethereum.SmartContract {
   EtherCoinFlipStructs(param0: BigInt): Contract__EtherCoinFlipStructsResult {
     let result = super.call(
       "EtherCoinFlipStructs",
-      "EtherCoinFlipStructs(uint256):(uint256,address,uint256,address,uint256,uint256,address,address)",
+      "EtherCoinFlipStructs(uint256):(uint256,address,uint256,address,uint256,uint256,address,address,bool)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
 
@@ -154,7 +170,8 @@ export class Contract extends ethereum.SmartContract {
       result[4].toBigInt(),
       result[5].toBigInt(),
       result[6].toAddress(),
-      result[7].toAddress()
+      result[7].toAddress(),
+      result[8].toBoolean()
     );
   }
 
@@ -163,7 +180,7 @@ export class Contract extends ethereum.SmartContract {
   ): ethereum.CallResult<Contract__EtherCoinFlipStructsResult> {
     let result = super.tryCall(
       "EtherCoinFlipStructs",
-      "EtherCoinFlipStructs(uint256):(uint256,address,uint256,address,uint256,uint256,address,address)",
+      "EtherCoinFlipStructs(uint256):(uint256,address,uint256,address,uint256,uint256,address,address,bool)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
     if (result.reverted) {
@@ -179,7 +196,8 @@ export class Contract extends ethereum.SmartContract {
         value[4].toBigInt(),
         value[5].toBigInt(),
         value[6].toAddress(),
-        value[7].toAddress()
+        value[7].toAddress(),
+        value[8].toBoolean()
       )
     );
   }
