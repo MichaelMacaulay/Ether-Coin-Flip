@@ -7,7 +7,7 @@ type finishedCoinFlip @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
-type startedCoinfFlip @entity(immutable: true) {
+type startedCoinFlip @entity(immutable: true) {
   id: Bytes!
   theCoinFlipID: BigInt! # uint256
   theBetStarter: Bytes! # address

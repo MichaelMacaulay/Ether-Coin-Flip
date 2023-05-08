@@ -7,7 +7,7 @@ export default function EndCoinFlip({ coinFlipID }) {
     const [etherInput, setEtherInput] = useState('0');
 
     const { config } = usePrepareContractWrite({
-    address: '0x69e6142dC3f0d34AA792fda0844523FC3fEcdB23',
+    address: '0x7D091888582c79F9296a04e996D390bF2eE98acB',
     abi: etherCoinFlipABI,
     functionName: 'endCoinFlip',
     args: [coinFlipID]

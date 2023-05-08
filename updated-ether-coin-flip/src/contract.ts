@@ -1,8 +1,8 @@
 import {
   finishedCoinFlip as finishedCoinFlipEvent,
-  startedCoinfFlip as startedCoinfFlipEvent
+  startedCoinFlip as startedCoinFlipEvent
 } from "../generated/Contract/Contract"
-import { finishedCoinFlip, startedCoinfFlip } from "../generated/schema"
+import { finishedCoinFlip, startedCoinFlip } from "../generated/schema"
 
 export function handlefinishedCoinFlip(event: finishedCoinFlipEvent): void {
   let entity = new finishedCoinFlip(
@@ -18,8 +18,8 @@ export function handlefinishedCoinFlip(event: finishedCoinFlipEvent): void {
   entity.save()
 }
 
-export function handlestartedCoinfFlip(event: startedCoinfFlipEvent): void {
-  let entity = new startedCoinfFlip(
+export function handlestartedCoinFlip(event: startedCoinFlipEvent): void {
+  let entity = new startedCoinFlip(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
   entity.theCoinFlipID = event.params.theCoinFlipID

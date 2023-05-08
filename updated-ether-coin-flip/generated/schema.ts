@@ -114,7 +114,7 @@ export class finishedCoinFlip extends Entity {
   }
 }
 
-export class startedCoinfFlip extends Entity {
+export class startedCoinFlip extends Entity {
   constructor(id: Bytes) {
     super();
     this.set("id", Value.fromBytes(id));
@@ -122,19 +122,19 @@ export class startedCoinfFlip extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save startedCoinfFlip entity without an ID");
+    assert(id != null, "Cannot save startedCoinFlip entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.BYTES,
-        `Entities of type startedCoinfFlip must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type startedCoinFlip must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("startedCoinfFlip", id.toBytes().toHexString(), this);
+      store.set("startedCoinFlip", id.toBytes().toHexString(), this);
     }
   }
 
-  static load(id: Bytes): startedCoinfFlip | null {
-    return changetype<startedCoinfFlip | null>(
-      store.get("startedCoinfFlip", id.toHexString())
+  static load(id: Bytes): startedCoinFlip | null {
+    return changetype<startedCoinFlip | null>(
+      store.get("startedCoinFlip", id.toHexString())
     );
   }
 

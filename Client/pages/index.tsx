@@ -37,7 +37,6 @@ const Home: NextPage = () =>  {
     <div className={styles.container}>
       <Head>
         <title>Ether Coin Flip</title>
-        <link href="/favicon.ico" rel="icon" />
       </Head>
 
       <header>

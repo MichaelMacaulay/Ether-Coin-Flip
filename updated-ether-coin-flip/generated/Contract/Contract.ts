@@ -32,16 +32,16 @@ export class finishedCoinFlip__Params {
   }
 }
 
-export class startedCoinfFlip extends ethereum.Event {
-  get params(): startedCoinfFlip__Params {
-    return new startedCoinfFlip__Params(this);
+export class startedCoinFlip extends ethereum.Event {
+  get params(): startedCoinFlip__Params {
+    return new startedCoinFlip__Params(this);
   }
 }
 
-export class startedCoinfFlip__Params {
-  _event: startedCoinfFlip;
+export class startedCoinFlip__Params {
+  _event: startedCoinFlip;
 
-  constructor(event: startedCoinfFlip) {
+  constructor(event: startedCoinFlip) {
     this._event = event;
   }
 
