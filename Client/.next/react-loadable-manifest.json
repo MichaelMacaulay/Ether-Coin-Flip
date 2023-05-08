@@ -1,10 +1,4 @@
 {
-  "../.graphclient/index.ts -> ./sources/Ether-Coin-Flip/introspectionSchema": {
-    "id": "../.graphclient/index.ts -> ./sources/Ether-Coin-Flip/introspectionSchema",
-    "files": [
-      "static/chunks/_graphclient_sources_Ether-Coin-Flip_introspectionSchema_ts.js"
-    ]
-  },
   "../node_modules/@rainbow-me/rainbowkit/dist/chunk-CDB4MGXW.js -> ./Brave-AYENFWW6.js": {
     "id": "../node_modules/@rainbow-me/rainbowkit/dist/chunk-CDB4MGXW.js -> ./Brave-AYENFWW6.js",
     "files": [
