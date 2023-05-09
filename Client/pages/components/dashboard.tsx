@@ -28,7 +28,7 @@ export default function Dashboard({ coinFlips }: DashboardProps) {
                 <li key={coinFlip.id}>
                     Coin flip ID: {coinFlip.theCoinFlipID}, Coin flip starter: {coinFlip.theBetStarter}, Wager: {etherWager} ether
                     <br />
-                    <EndCoinFlip coinFlipID={coinFlip.theCoinFlipID} />
+                    <EndCoinFlip coinFlipID={coinFlip.theCoinFlipID} etherWager={coinFlip.theStartingWager} />
                 </li>
                 );
             })}
