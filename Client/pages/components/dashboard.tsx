@@ -14,18 +14,14 @@ type DashboardProps = {
 };
 
 export default function Dashboard({ coinFlips }: DashboardProps) {
-    console.log('Raw coinFlips data:', coinFlips);
-    const activeCoinFlips = coinFlips?.filter(coinFlip => !coinFlip.isFinished);
-    console.log('Filtered activeCoinFlips data:', activeCoinFlips);
-
 
     return (
     <div>
         <h1>Dashboard</h1>
         <div>
-        {activeCoinFlips && activeCoinFlips.length > 0 ? (
+        {coinFlips && coinFlips.length > 0 ? (
             <ul>
-            {activeCoinFlips.map((coinFlip) => {
+            {coinFlips.map((coinFlip) => {
                 const etherWager = ethers.utils.formatEther(coinFlip.theStartingWager);
                 return (
                 <li key={coinFlip.id}>
