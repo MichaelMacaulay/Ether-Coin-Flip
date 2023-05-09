@@ -6,6 +6,7 @@ type CoinFlip = {
     theCoinFlipID: number;
     theBetStarter: string;
     theStartingWager: string;
+    isFinished: boolean;
 };
 
 type DashboardProps = {
@@ -13,13 +14,15 @@ type DashboardProps = {
 };
 
 export default function Dashboard({ coinFlips }: DashboardProps) {
+    const activeCoinFlips = coinFlips?.filter(coinFlip => !coinFlip.isFinished);
+
     return (
     <div>
         <h1>Dashboard</h1>
         <div>
-        {coinFlips ? (
+        {activeCoinFlips && activeCoinFlips.length > 0 ? (
             <ul>
-            {coinFlips.map((coinFlip) => {
+            {activeCoinFlips.map((coinFlip) => {
                 const etherWager = ethers.utils.formatEther(coinFlip.theStartingWager);
                 return (
                 <li key={coinFlip.id}>
@@ -31,7 +34,7 @@ export default function Dashboard({ coinFlips }: DashboardProps) {
             })}
             </ul>
         ) : (
-            <p>No coin flips found.</p>
+            <p>No active coin flips found.</p>
         )}
         </div>
     </div>
