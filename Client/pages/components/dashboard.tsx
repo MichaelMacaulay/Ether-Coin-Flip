@@ -14,7 +14,10 @@ type DashboardProps = {
 };
 
 export default function Dashboard({ coinFlips }: DashboardProps) {
+    console.log('Raw coinFlips data:', coinFlips);
     const activeCoinFlips = coinFlips?.filter(coinFlip => !coinFlip.isFinished);
+    console.log('Filtered activeCoinFlips data:', activeCoinFlips);
+
 
     return (
     <div>

@@ -1,6 +1,6 @@
 import { usePrepareContractWrite, useContractWrite } from 'wagmi';
 import etherCoinFlipABI from '../utils/etherCoinFlipABI.json';
-import { ethers, BigNumber } from 'ethers';
+import { BigNumber } from 'ethers';
 
 type EndCoinFlipProps = {
     coinFlipID: number;
@@ -9,9 +9,7 @@ type EndCoinFlipProps = {
 
 export default function EndCoinFlip({ coinFlipID, etherWager }: EndCoinFlipProps) {
 
-
     const etherWagerAsBigNumber = BigNumber.from(etherWager);
-    console.log('Sending ether value:', etherWagerAsBigNumber.toString());
 
     const { config } = usePrepareContractWrite({
         address: '0x077AABB3592F723E54ca0c8C0968A0C1e4DaD85C',
