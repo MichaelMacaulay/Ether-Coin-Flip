@@ -12,7 +12,7 @@ export default function EndCoinFlip({ coinFlipID, etherWager }: EndCoinFlipProps
     const etherWagerAsBigNumber = BigNumber.from(etherWager);
 
     const { config } = usePrepareContractWrite({
-        address: '0x077AABB3592F723E54ca0c8C0968A0C1e4DaD85C',
+        address: '0xb182EFe95C47476014582c22A1c71733c714ED1e',
         abi: etherCoinFlipABI,
         functionName: 'endCoinFlip',
         args: [coinFlipID],

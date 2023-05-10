@@ -1,4 +1,4 @@
-import { configureChains, createClient, WagmiConfig, usePrepareContractWrite, useContractWrite } from 'wagmi';
+import { usePrepareContractWrite, useContractWrite } from 'wagmi';
 import etherCoinFlipABI from '../utils/etherCoinFlipABI.json';
 import { ethers } from 'ethers';
 import { useState } from 'react';
@@ -9,7 +9,7 @@ const [etherInput, setEtherInput] = useState('0');
 const value = isNaN(parseFloat(etherInput)) ? undefined : ethers.utils.parseEther(etherInput.toString());
 
 const { config } = usePrepareContractWrite({
-    address: '0x077AABB3592F723E54ca0c8C0968A0C1e4DaD85C',
+    address: '0xb182EFe95C47476014582c22A1c71733c714ED1e',
     abi: etherCoinFlipABI,
     functionName: 'newCoinFlip',
     overrides: { value }

@@ -1,5 +1,6 @@
 type finishedCoinFlip @entity(immutable: true) {
   id: Bytes!
+  theCoinFlipID: BigInt! # uint256
   winner: Bytes! # address
   loser: Bytes! # address
   isFinished: Boolean! # bool

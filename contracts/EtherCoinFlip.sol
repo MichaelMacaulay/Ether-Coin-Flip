@@ -22,7 +22,7 @@ contract EtherCoinFlip {
     mapping(uint256 => EtherCoinFlipStruct) public EtherCoinFlipStructs;
 
     event startedCoinFlip(uint256 indexed theCoinFlipID, address indexed theBetStarter, uint256 theStartingWager, bool isFinished);
-    event finishedCoinFlip(address indexed winner, address indexed loser, bool isFinished);
+    event finishedCoinFlip(uint256 indexed theCoinFlipID, address indexed winner, address indexed loser, bool isFinished);
 
     function newCoinFlip() public payable returns (uint256 coinFlipID) {
         address payable player1 = payable(msg.sender);
@@ -39,7 +39,7 @@ contract EtherCoinFlip {
             payable(address(0)),
             false
         );
-        emit startedCoinFlip(coinFlipID, player1, msg.value, false);
+        emit startedCoinFlip(coinFlipID, player1, msg.value, EtherCoinFlipStructs[coinFlipID].isFinished);
     }
 
     function endCoinFlip(uint256 coinFlipID) public payable {
@@ -66,6 +66,6 @@ contract EtherCoinFlip {
 
         c.winner.transfer(c.etherTotal);
         c.isFinished = true;
-        emit finishedCoinFlip(c.winner, c.loser, true);
+        emit finishedCoinFlip(coinFlipID, c.winner, c.loser, EtherCoinFlipStructs[coinFlipID].isFinished);
     }
 }

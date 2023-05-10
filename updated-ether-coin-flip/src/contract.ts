@@ -8,6 +8,7 @@ export function handlefinishedCoinFlip(event: finishedCoinFlipEvent): void {
   let entity = new finishedCoinFlip(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
+  entity.theCoinFlipID = event.params.theCoinFlipID
   entity.winner = event.params.winner
   entity.loser = event.params.loser
   entity.isFinished = event.params.isFinished

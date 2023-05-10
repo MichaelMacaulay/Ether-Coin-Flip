@@ -25,8 +25,6 @@ const Home: NextPage = () =>  {
   const [result] = useQuery({ query: exampleQuery });
   const { data, fetching, error } = result;
 
-  console.log("data:", data);
-
   return (
     <div className={styles.container}>
       <Head>

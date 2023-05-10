@@ -54,6 +54,19 @@ export class finishedCoinFlip extends Entity {
     this.set("id", Value.fromBytes(value));
   }
 
+  get theCoinFlipID(): BigInt {
+    let value = this.get("theCoinFlipID");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set theCoinFlipID(value: BigInt) {
+    this.set("theCoinFlipID", Value.fromBigInt(value));
+  }
+
   get winner(): Bytes {
     let value = this.get("winner");
     if (!value || value.kind == ValueKind.NULL) {

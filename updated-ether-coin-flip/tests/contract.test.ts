@@ -6,7 +6,7 @@ import {
   beforeAll,
   afterAll
 } from "matchstick-as/assembly/index"
-import { Address, BigInt } from "@graphprotocol/graph-ts"
+import { BigInt, Address } from "@graphprotocol/graph-ts"
 import { finishedCoinFlip } from "../generated/schema"
 import { finishedCoinFlip as finishedCoinFlipEvent } from "../generated/Contract/Contract"
 import { handlefinishedCoinFlip } from "../src/contract"
@@ -17,12 +17,14 @@ import { createfinishedCoinFlipEvent } from "./contract-utils"
 
 describe("Describe entity assertions", () => {
   beforeAll(() => {
+    let theCoinFlipID = BigInt.fromI32(234)
     let winner = Address.fromString(
       "0x0000000000000000000000000000000000000001"
     )
     let loser = Address.fromString("0x0000000000000000000000000000000000000001")
     let isFinished = "boolean Not implemented"
     let newfinishedCoinFlipEvent = createfinishedCoinFlipEvent(
+      theCoinFlipID,
       winner,
       loser,
       isFinished
@@ -41,6 +43,12 @@ describe("Describe entity assertions", () => {
     assert.entityCount("finishedCoinFlip", 1)
 
     // 0xa16081f360e3847006db660bae1c6d1b2e17ec2a is the default address used in newMockEvent() function
+    assert.fieldEquals(
+      "finishedCoinFlip",
+      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
+      "theCoinFlipID",
+      "234"
+    )
     assert.fieldEquals(
       "finishedCoinFlip",
       "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",

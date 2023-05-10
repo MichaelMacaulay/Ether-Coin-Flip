@@ -1,11 +1,12 @@
 import { newMockEvent } from "matchstick-as"
-import { ethereum, Address, BigInt } from "@graphprotocol/graph-ts"
+import { ethereum, BigInt, Address } from "@graphprotocol/graph-ts"
 import {
   finishedCoinFlip,
   startedCoinFlip
 } from "../generated/Contract/Contract"
 
 export function createfinishedCoinFlipEvent(
+  theCoinFlipID: BigInt,
   winner: Address,
   loser: Address,
   isFinished: boolean
@@ -14,6 +15,12 @@ export function createfinishedCoinFlipEvent(
 
   finishedCoinFlipEvent.parameters = new Array()
 
+  finishedCoinFlipEvent.parameters.push(
+    new ethereum.EventParam(
+      "theCoinFlipID",
+      ethereum.Value.fromUnsignedBigInt(theCoinFlipID)
+    )
+  )
   finishedCoinFlipEvent.parameters.push(
     new ethereum.EventParam("winner", ethereum.Value.fromAddress(winner))
   )
