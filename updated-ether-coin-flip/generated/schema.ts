@@ -93,19 +93,6 @@ export class finishedCoinFlip extends Entity {
     this.set("loser", Value.fromBytes(value));
   }
 
-  get isFinished(): boolean {
-    let value = this.get("isFinished");
-    if (!value || value.kind == ValueKind.NULL) {
-      return false;
-    } else {
-      return value.toBoolean();
-    }
-  }
-
-  set isFinished(value: boolean) {
-    this.set("isFinished", Value.fromBoolean(value));
-  }
-
   get blockNumber(): BigInt {
     let value = this.get("blockNumber");
     if (!value || value.kind == ValueKind.NULL) {
@@ -226,19 +213,6 @@ export class startedCoinFlip extends Entity {
 
   set theStartingWager(value: BigInt) {
     this.set("theStartingWager", Value.fromBigInt(value));
-  }
-
-  get isFinished(): boolean {
-    let value = this.get("isFinished");
-    if (!value || value.kind == ValueKind.NULL) {
-      return false;
-    } else {
-      return value.toBoolean();
-    }
-  }
-
-  set isFinished(value: boolean) {
-    this.set("isFinished", Value.fromBoolean(value));
   }
 
   get blockNumber(): BigInt {

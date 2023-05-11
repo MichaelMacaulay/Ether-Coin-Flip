@@ -11,7 +11,6 @@ export function handlefinishedCoinFlip(event: finishedCoinFlipEvent): void {
   entity.theCoinFlipID = event.params.theCoinFlipID
   entity.winner = event.params.winner
   entity.loser = event.params.loser
-  entity.isFinished = event.params.isFinished
 
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp
@@ -27,7 +26,6 @@ export function handlestartedCoinFlip(event: startedCoinFlipEvent): void {
   entity.theCoinFlipID = event.params.theCoinFlipID
   entity.theBetStarter = event.params.theBetStarter
   entity.theStartingWager = event.params.theStartingWager
-  entity.isFinished = event.params.isFinished
 
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp

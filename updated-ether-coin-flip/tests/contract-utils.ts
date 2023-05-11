@@ -8,8 +8,7 @@ import {
 export function createfinishedCoinFlipEvent(
   theCoinFlipID: BigInt,
   winner: Address,
-  loser: Address,
-  isFinished: boolean
+  loser: Address
 ): finishedCoinFlip {
   let finishedCoinFlipEvent = changetype<finishedCoinFlip>(newMockEvent())
 
@@ -27,12 +26,6 @@ export function createfinishedCoinFlipEvent(
   finishedCoinFlipEvent.parameters.push(
     new ethereum.EventParam("loser", ethereum.Value.fromAddress(loser))
   )
-  finishedCoinFlipEvent.parameters.push(
-    new ethereum.EventParam(
-      "isFinished",
-      ethereum.Value.fromBoolean(isFinished)
-    )
-  )
 
   return finishedCoinFlipEvent
 }
@@ -40,8 +33,7 @@ export function createfinishedCoinFlipEvent(
 export function createstartedCoinFlipEvent(
   theCoinFlipID: BigInt,
   theBetStarter: Address,
-  theStartingWager: BigInt,
-  isFinished: boolean
+  theStartingWager: BigInt
 ): startedCoinFlip {
   let startedCoinFlipEvent = changetype<startedCoinFlip>(newMockEvent())
 
@@ -63,12 +55,6 @@ export function createstartedCoinFlipEvent(
     new ethereum.EventParam(
       "theStartingWager",
       ethereum.Value.fromUnsignedBigInt(theStartingWager)
-    )
-  )
-  startedCoinFlipEvent.parameters.push(
-    new ethereum.EventParam(
-      "isFinished",
-      ethereum.Value.fromBoolean(isFinished)
     )
   )
 

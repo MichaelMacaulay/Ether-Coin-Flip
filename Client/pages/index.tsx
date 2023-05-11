@@ -11,12 +11,11 @@ const StartCoinFlipButton = dynamic(() => import("./components/startCoinFlipButt
 });
 
 const exampleQuery = `{
-  startedCoinFlips(where: {isFinished: false} first: 10, orderBy: theCoinFlipID, orderDirection: desc) {
+  startedCoinFlips(first: 10) {
     id
     theCoinFlipID
     theBetStarter
     theStartingWager
-    isFinished
   }
 }`;
 

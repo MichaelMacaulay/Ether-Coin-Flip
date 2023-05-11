@@ -29,7 +29,7 @@ const wagmiClient = createClient({
 });
 
 const client = createUrqlClient({
-    url: 'https://api.studio.thegraph.com/query/25902/updated-ether-coin-flip/v0.1.6',
+    url: 'https://api.studio.thegraph.com/query/25902/updated-ether-coin-flip/v0.2.0',
     requestPolicy: 'cache-and-network',
 });
 

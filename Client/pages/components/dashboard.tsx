@@ -6,7 +6,6 @@ type CoinFlip = {
     theCoinFlipID: number;
     theBetStarter: string;
     theStartingWager: string;
-    isFinished: boolean;
 };
 
 type DashboardProps = {
@@ -27,7 +26,7 @@ export default function Dashboard({ coinFlips }: DashboardProps) {
                 const etherWager = ethers.utils.formatEther(coinFlip.theStartingWager);
                 return (
                 <li key={coinFlip.id}>
-                    Coin flip ID: {coinFlip.theCoinFlipID}, Coin flip starter: {coinFlip.theBetStarter}, Wager: {etherWager} ether. isFinished: {coinFlip.isFinished ? "true" : "false"} 
+                    Coin flip ID: {coinFlip.theCoinFlipID}, Coin flip starter: {coinFlip.theBetStarter}, Wager: {etherWager} ether.
                     <br />
                     <EndCoinFlip coinFlipID={coinFlip.theCoinFlipID} etherWager={coinFlip.theStartingWager} />
                 </li>
