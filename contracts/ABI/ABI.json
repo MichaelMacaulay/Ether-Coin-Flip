@@ -35,18 +35,6 @@
 			},
 			{
 				"indexed": false,
-				"internalType": "address",
-				"name": "winner",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "loser",
-				"type": "address"
-			},
-			{
-				"indexed": false,
 				"internalType": "uint256",
 				"name": "etherTotal",
 				"type": "uint256"
@@ -132,16 +120,6 @@
 				"internalType": "uint256",
 				"name": "etherTotal",
 				"type": "uint256"
-			},
-			{
-				"internalType": "address payable",
-				"name": "winner",
-				"type": "address"
-			},
-			{
-				"internalType": "address payable",
-				"name": "loser",
-				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -186,16 +164,6 @@
 				"internalType": "uint256",
 				"name": "etherTotal",
 				"type": "uint256"
-			},
-			{
-				"internalType": "address payable",
-				"name": "winner",
-				"type": "address"
-			},
-			{
-				"internalType": "address payable",
-				"name": "loser",
-				"type": "address"
 			}
 		],
 		"stateMutability": "view",
