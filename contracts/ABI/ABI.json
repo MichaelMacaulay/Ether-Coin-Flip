@@ -24,6 +24,18 @@
 			{
 				"indexed": true,
 				"internalType": "address",
+				"name": "betStarter",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "betEnder",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
 				"name": "winner",
 				"type": "address"
 			},
@@ -32,9 +44,15 @@
 				"internalType": "address",
 				"name": "loser",
 				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "etherTotal",
+				"type": "uint256"
 			}
 		],
-		"name": "finishedCoinFlip",
+		"name": "endedCoinFlips",
 		"type": "event"
 	},
 	{
@@ -72,7 +90,7 @@
 				"type": "uint256"
 			}
 		],
-		"name": "startedCoinFlip",
+		"name": "startedCoinFlips",
 		"type": "event"
 	},
 	{
