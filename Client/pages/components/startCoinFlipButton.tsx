@@ -9,7 +9,7 @@ const [etherInput, setEtherInput] = useState('0');
 const value = isNaN(parseFloat(etherInput)) ? undefined : ethers.utils.parseEther(etherInput.toString());
 
 const { config } = usePrepareContractWrite({
-    address: '0xb182EFe95C47476014582c22A1c71733c714ED1e',
+    address: '0x398F6C9e699DfdbF33fefE0d484B5BF87551cf37',
     abi: etherCoinFlipABI,
     functionName: 'newCoinFlip',
     overrides: { value }

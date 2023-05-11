@@ -6,9 +6,9 @@ dataSources:
     name: Contract
     network: sepolia
     source:
-      address: "0xb182EFe95C47476014582c22A1c71733c714ED1e"
+      address: "0x398F6C9e699DfdbF33fefE0d484B5BF87551cf37"
       abi: Contract
-      startBlock: 3457975
+      startBlock: 3465065
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -20,8 +20,8 @@ dataSources:
         - name: Contract
           file: ./abis/Contract.json
       eventHandlers:
-        - event: finishedCoinFlip(indexed uint256,indexed address,indexed address,bool)
+        - event: finishedCoinFlip(indexed uint256,indexed address,address,indexed bool)
           handler: handlefinishedCoinFlip
-        - event: startedCoinFlip(indexed uint256,indexed address,uint256,bool)
+        - event: startedCoinFlip(indexed uint256,indexed address,uint256,indexed bool)
           handler: handlestartedCoinFlip
       file: ./src/contract.ts

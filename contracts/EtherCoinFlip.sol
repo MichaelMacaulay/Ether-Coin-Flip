@@ -21,8 +21,8 @@ contract EtherCoinFlip {
     uint256 numberOfCoinFlips = 1;
     mapping(uint256 => EtherCoinFlipStruct) public EtherCoinFlipStructs;
 
-    event startedCoinFlip(uint256 indexed theCoinFlipID, address indexed theBetStarter, uint256 theStartingWager, bool isFinished);
-    event finishedCoinFlip(uint256 indexed theCoinFlipID, address indexed winner, address indexed loser, bool isFinished);
+    event startedCoinFlip(uint256 indexed theCoinFlipID, address indexed theBetStarter, uint256 theStartingWager, bool indexed isFinished);
+    event finishedCoinFlip(uint256 indexed theCoinFlipID, address indexed winner, address loser, bool indexed isFinished);
 
     function newCoinFlip() public payable returns (uint256 coinFlipID) {
         address payable player1 = payable(msg.sender);
