@@ -37,7 +37,11 @@ const Home: NextPage = () =>  {
       <main className={styles.main}>
         <StartCoinFlipButton />
         <br />
+<<<<<<< Updated upstream
         <Dashboard coinFlips={result.data?.startedCoinFlips} />
+=======
+        <Dashboard activeCoinFlips={activeCoinFlips} finishedCoinFlips={finishedCoinFlips} />
+>>>>>>> Stashed changes
       </main>
 
       <footer className={styles.footer}>
