@@ -13,69 +13,56 @@ contract EtherCoinFlip {
         address payable betEnder;
         uint256 endingWager;
         uint256 etherTotal;
+        address payable winner;
+        address payable loser;
     }
 
-    uint256 numberOfCoinFlips = 0;
-    mapping(uint256 => EtherCoinFlipStruct) public activeCoinFlips;
-    mapping(uint256 => EtherCoinFlipStruct) public finishedCoinFlips;
+    uint256 numberOfCoinFlips = 1;
+    mapping(uint256 => EtherCoinFlipStruct) public EtherCoinFlipStructs;
 
-    event startedCoinFlips(uint256 indexed theCoinFlipID, address indexed theBetStarter, uint256 theStartingWager);
-    event endedCoinFlips(uint256 indexed theCoinFlipID, address indexed betStarter, address indexed betEnder, uint256 etherTotal);
+    event startedCoinfFlip(uint256 indexed theCoinFlipID, address indexed theBetStarter, uint256 theStartingWager);
+    event finishedCoinFlip(uint256 indexed theCoinFlipID, address indexed winner, address indexed loser);
 
     function newCoinFlip() public payable returns (uint256 coinFlipID) {
         address payable player1 = payable(msg.sender);
         coinFlipID = numberOfCoinFlips;
         numberOfCoinFlips = numberOfCoinFlips.add(1);
-        activeCoinFlips[coinFlipID] = EtherCoinFlipStruct(
+        EtherCoinFlipStructs[coinFlipID] = EtherCoinFlipStruct(
             coinFlipID,
             player1,
             msg.value,
             payable(address(0)),
             0,
-            0
+            0,
+            payable(address(0)),
+            payable(address(0))
         );
-        emit startedCoinFlips(coinFlipID, player1, msg.value);
+        emit startedCoinfFlip(coinFlipID, player1, msg.value);
     }
 
     function endCoinFlip(uint256 coinFlipID) public payable {
-        EtherCoinFlipStruct storage c = activeCoinFlips[coinFlipID];
+    EtherCoinFlipStruct storage c = EtherCoinFlipStructs[coinFlipID];
+    address payable player2 = payable(msg.sender);
 
-        require(msg.value >= c.startingWager.mul(99).div(100) && msg.value <= c.startingWager.mul(101).div(100), "Ending wager must be within 1% of the starting wager");
-        address payable player2 = payable(msg.sender);
-        require(coinFlipID == c.ID, "Invalid coin flip ID");
+    require(msg.value >= c.startingWager.mul(99).div(100) && msg.value <= c.startingWager.mul(101).div(100), "Ending wager must be within 1% of the starting wager");
+    require(coinFlipID == c.ID, "Invalid coin flip ID");
 
-        c.betEnder = player2;
-        c.endingWager = msg.value;
-        c.etherTotal = c.startingWager.add(c.endingWager);
+    c.betEnder = player2;
+    c.endingWager = msg.value;
+    c.etherTotal = c.startingWager.add(c.endingWager);
 
-        bytes32 randomHash = keccak256(abi.encodePacked(block.chainid, block.gaslimit, block.number, block.timestamp, msg.sender));
-        uint256 randomResult = uint256(randomHash);
+    bytes32 randomHash = keccak256(abi.encodePacked(block.chainid, block.gaslimit, block.number, block.timestamp, msg.sender));
+    uint256 randomResult = uint256(randomHash);
 
-        address payable winner;
-        address payable loser;
-
-        if ((randomResult % 2) == 0) {
-            winner = c.betStarter;
-            loser = c.betEnder;
-        } else {
-            winner = c.betEnder;
-            loser = c.betStarter;
-        }
-
-        winner.transfer(c.etherTotal);
-
-        emit endedCoinFlips(coinFlipID, c.betStarter, c.betEnder, c.etherTotal);
-
-        finishedCoinFlips[coinFlipID] = EtherCoinFlipStruct(
-            coinFlipID,
-            c.betStarter,
-            c.startingWager,
-            c.betEnder,
-            c.endingWager,
-            c.etherTotal
-        );
-
-        delete activeCoinFlips[coinFlipID];
-
+    if ((randomResult % 2) == 0) {
+        c.winner = c.betStarter;
+        c.loser = c.betEnder;
+    } else {
+        c.winner = c.betEnder;
+        c.loser = c.betStarter;
     }
+
+    c.winner.transfer(c.etherTotal);
+    emit finishedCoinFlip(c.ID, c.winner, c.loser);
+}
 }

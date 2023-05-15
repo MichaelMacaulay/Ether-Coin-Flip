@@ -11,7 +11,7 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class endedCoinFlips extends Entity {
+export class finishedCoinFlip extends Entity {
   constructor(id: Bytes) {
     super();
     this.set("id", Value.fromBytes(id));
@@ -19,25 +19,25 @@ export class endedCoinFlips extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save endedCoinFlips entity without an ID");
+    assert(id != null, "Cannot save finishedCoinFlip entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.BYTES,
-        `Entities of type endedCoinFlips must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type finishedCoinFlip must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("endedCoinFlips", id.toBytes().toHexString(), this);
+      store.set("finishedCoinFlip", id.toBytes().toHexString(), this);
     }
   }
 
-  static loadInBlock(id: Bytes): endedCoinFlips | null {
-    return changetype<endedCoinFlips | null>(
-      store.get_in_block("endedCoinFlips", id.toHexString())
+  static loadInBlock(id: Bytes): finishedCoinFlip | null {
+    return changetype<finishedCoinFlip | null>(
+      store.get_in_block("finishedCoinFlip", id.toHexString())
     );
   }
 
-  static load(id: Bytes): endedCoinFlips | null {
-    return changetype<endedCoinFlips | null>(
-      store.get("endedCoinFlips", id.toHexString())
+  static load(id: Bytes): finishedCoinFlip | null {
+    return changetype<finishedCoinFlip | null>(
+      store.get("finishedCoinFlip", id.toHexString())
     );
   }
 
@@ -67,8 +67,8 @@ export class endedCoinFlips extends Entity {
     this.set("theCoinFlipID", Value.fromBigInt(value));
   }
 
-  get betStarter(): Bytes {
-    let value = this.get("betStarter");
+  get winner(): Bytes {
+    let value = this.get("winner");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
@@ -76,12 +76,12 @@ export class endedCoinFlips extends Entity {
     }
   }
 
-  set betStarter(value: Bytes) {
-    this.set("betStarter", Value.fromBytes(value));
+  set winner(value: Bytes) {
+    this.set("winner", Value.fromBytes(value));
   }
 
-  get betEnder(): Bytes {
-    let value = this.get("betEnder");
+  get loser(): Bytes {
+    let value = this.get("loser");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
@@ -89,21 +89,8 @@ export class endedCoinFlips extends Entity {
     }
   }
 
-  set betEnder(value: Bytes) {
-    this.set("betEnder", Value.fromBytes(value));
-  }
-
-  get etherTotal(): BigInt {
-    let value = this.get("etherTotal");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set etherTotal(value: BigInt) {
-    this.set("etherTotal", Value.fromBigInt(value));
+  set loser(value: Bytes) {
+    this.set("loser", Value.fromBytes(value));
   }
 
   get blockNumber(): BigInt {
@@ -146,7 +133,7 @@ export class endedCoinFlips extends Entity {
   }
 }
 
-export class startedCoinFlips extends Entity {
+export class startedCoinfFlip extends Entity {
   constructor(id: Bytes) {
     super();
     this.set("id", Value.fromBytes(id));
@@ -154,25 +141,25 @@ export class startedCoinFlips extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save startedCoinFlips entity without an ID");
+    assert(id != null, "Cannot save startedCoinfFlip entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.BYTES,
-        `Entities of type startedCoinFlips must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type startedCoinfFlip must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("startedCoinFlips", id.toBytes().toHexString(), this);
+      store.set("startedCoinfFlip", id.toBytes().toHexString(), this);
     }
   }
 
-  static loadInBlock(id: Bytes): startedCoinFlips | null {
-    return changetype<startedCoinFlips | null>(
-      store.get_in_block("startedCoinFlips", id.toHexString())
+  static loadInBlock(id: Bytes): startedCoinfFlip | null {
+    return changetype<startedCoinfFlip | null>(
+      store.get_in_block("startedCoinfFlip", id.toHexString())
     );
   }
 
-  static load(id: Bytes): startedCoinFlips | null {
-    return changetype<startedCoinFlips | null>(
-      store.get("startedCoinFlips", id.toHexString())
+  static load(id: Bytes): startedCoinfFlip | null {
+    return changetype<startedCoinfFlip | null>(
+      store.get("startedCoinfFlip", id.toHexString())
     );
   }
 

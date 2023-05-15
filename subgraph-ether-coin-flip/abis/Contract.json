@@ -20,23 +20,17 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "betStarter",
+        "name": "winner",
         "type": "address"
       },
       {
         "indexed": true,
         "internalType": "address",
-        "name": "betEnder",
+        "name": "loser",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "etherTotal",
-        "type": "uint256"
       }
     ],
-    "name": "endedCoinFlips",
+    "name": "finishedCoinFlip",
     "type": "event"
   },
   {
@@ -70,12 +64,12 @@
         "type": "uint256"
       }
     ],
-    "name": "startedCoinFlips",
+    "name": "startedCoinfFlip",
     "type": "event"
   },
   {
     "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "name": "activeCoinFlips",
+    "name": "EtherCoinFlipStructs",
     "outputs": [
       { "internalType": "uint256", "name": "ID", "type": "uint256" },
       {
@@ -90,29 +84,13 @@
         "type": "address"
       },
       { "internalType": "uint256", "name": "endingWager", "type": "uint256" },
-      { "internalType": "uint256", "name": "etherTotal", "type": "uint256" }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "name": "finishedCoinFlips",
-    "outputs": [
-      { "internalType": "uint256", "name": "ID", "type": "uint256" },
+      { "internalType": "uint256", "name": "etherTotal", "type": "uint256" },
       {
         "internalType": "address payable",
-        "name": "betStarter",
+        "name": "winner",
         "type": "address"
       },
-      { "internalType": "uint256", "name": "startingWager", "type": "uint256" },
-      {
-        "internalType": "address payable",
-        "name": "betEnder",
-        "type": "address"
-      },
-      { "internalType": "uint256", "name": "endingWager", "type": "uint256" },
-      { "internalType": "uint256", "name": "etherTotal", "type": "uint256" }
+      { "internalType": "address payable", "name": "loser", "type": "address" }
     ],
     "stateMutability": "view",
     "type": "function"

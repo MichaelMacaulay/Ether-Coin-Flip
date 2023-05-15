@@ -10,16 +10,16 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
-export class endedCoinFlips extends ethereum.Event {
-  get params(): endedCoinFlips__Params {
-    return new endedCoinFlips__Params(this);
+export class finishedCoinFlip extends ethereum.Event {
+  get params(): finishedCoinFlip__Params {
+    return new finishedCoinFlip__Params(this);
   }
 }
 
-export class endedCoinFlips__Params {
-  _event: endedCoinFlips;
+export class finishedCoinFlip__Params {
+  _event: finishedCoinFlip;
 
-  constructor(event: endedCoinFlips) {
+  constructor(event: finishedCoinFlip) {
     this._event = event;
   }
 
@@ -27,29 +27,25 @@ export class endedCoinFlips__Params {
     return this._event.parameters[0].value.toBigInt();
   }
 
-  get betStarter(): Address {
+  get winner(): Address {
     return this._event.parameters[1].value.toAddress();
   }
 
-  get betEnder(): Address {
+  get loser(): Address {
     return this._event.parameters[2].value.toAddress();
   }
+}
 
-  get etherTotal(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
+export class startedCoinfFlip extends ethereum.Event {
+  get params(): startedCoinfFlip__Params {
+    return new startedCoinfFlip__Params(this);
   }
 }
 
-export class startedCoinFlips extends ethereum.Event {
-  get params(): startedCoinFlips__Params {
-    return new startedCoinFlips__Params(this);
-  }
-}
+export class startedCoinfFlip__Params {
+  _event: startedCoinfFlip;
 
-export class startedCoinFlips__Params {
-  _event: startedCoinFlips;
-
-  constructor(event: startedCoinFlips) {
+  constructor(event: startedCoinfFlip) {
     this._event = event;
   }
 
@@ -66,13 +62,15 @@ export class startedCoinFlips__Params {
   }
 }
 
-export class Contract__activeCoinFlipsResult {
+export class Contract__EtherCoinFlipStructsResult {
   value0: BigInt;
   value1: Address;
   value2: BigInt;
   value3: Address;
   value4: BigInt;
   value5: BigInt;
+  value6: Address;
+  value7: Address;
 
   constructor(
     value0: BigInt,
@@ -80,7 +78,9 @@ export class Contract__activeCoinFlipsResult {
     value2: BigInt,
     value3: Address,
     value4: BigInt,
-    value5: BigInt
+    value5: BigInt,
+    value6: Address,
+    value7: Address
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -88,6 +88,8 @@ export class Contract__activeCoinFlipsResult {
     this.value3 = value3;
     this.value4 = value4;
     this.value5 = value5;
+    this.value6 = value6;
+    this.value7 = value7;
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
@@ -98,6 +100,8 @@ export class Contract__activeCoinFlipsResult {
     map.set("value3", ethereum.Value.fromAddress(this.value3));
     map.set("value4", ethereum.Value.fromUnsignedBigInt(this.value4));
     map.set("value5", ethereum.Value.fromUnsignedBigInt(this.value5));
+    map.set("value6", ethereum.Value.fromAddress(this.value6));
+    map.set("value7", ethereum.Value.fromAddress(this.value7));
     return map;
   }
 
@@ -124,65 +128,13 @@ export class Contract__activeCoinFlipsResult {
   getEtherTotal(): BigInt {
     return this.value5;
   }
-}
 
-export class Contract__finishedCoinFlipsResult {
-  value0: BigInt;
-  value1: Address;
-  value2: BigInt;
-  value3: Address;
-  value4: BigInt;
-  value5: BigInt;
-
-  constructor(
-    value0: BigInt,
-    value1: Address,
-    value2: BigInt,
-    value3: Address,
-    value4: BigInt,
-    value5: BigInt
-  ) {
-    this.value0 = value0;
-    this.value1 = value1;
-    this.value2 = value2;
-    this.value3 = value3;
-    this.value4 = value4;
-    this.value5 = value5;
+  getWinner(): Address {
+    return this.value6;
   }
 
-  toMap(): TypedMap<string, ethereum.Value> {
-    let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromAddress(this.value1));
-    map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
-    map.set("value3", ethereum.Value.fromAddress(this.value3));
-    map.set("value4", ethereum.Value.fromUnsignedBigInt(this.value4));
-    map.set("value5", ethereum.Value.fromUnsignedBigInt(this.value5));
-    return map;
-  }
-
-  getID(): BigInt {
-    return this.value0;
-  }
-
-  getBetStarter(): Address {
-    return this.value1;
-  }
-
-  getStartingWager(): BigInt {
-    return this.value2;
-  }
-
-  getBetEnder(): Address {
-    return this.value3;
-  }
-
-  getEndingWager(): BigInt {
-    return this.value4;
-  }
-
-  getEtherTotal(): BigInt {
-    return this.value5;
+  getLoser(): Address {
+    return this.value7;
   }
 }
 
@@ -191,29 +143,31 @@ export class Contract extends ethereum.SmartContract {
     return new Contract("Contract", address);
   }
 
-  activeCoinFlips(param0: BigInt): Contract__activeCoinFlipsResult {
+  EtherCoinFlipStructs(param0: BigInt): Contract__EtherCoinFlipStructsResult {
     let result = super.call(
-      "activeCoinFlips",
-      "activeCoinFlips(uint256):(uint256,address,uint256,address,uint256,uint256)",
+      "EtherCoinFlipStructs",
+      "EtherCoinFlipStructs(uint256):(uint256,address,uint256,address,uint256,uint256,address,address)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
 
-    return new Contract__activeCoinFlipsResult(
+    return new Contract__EtherCoinFlipStructsResult(
       result[0].toBigInt(),
       result[1].toAddress(),
       result[2].toBigInt(),
       result[3].toAddress(),
       result[4].toBigInt(),
-      result[5].toBigInt()
+      result[5].toBigInt(),
+      result[6].toAddress(),
+      result[7].toAddress()
     );
   }
 
-  try_activeCoinFlips(
+  try_EtherCoinFlipStructs(
     param0: BigInt
-  ): ethereum.CallResult<Contract__activeCoinFlipsResult> {
+  ): ethereum.CallResult<Contract__EtherCoinFlipStructsResult> {
     let result = super.tryCall(
-      "activeCoinFlips",
-      "activeCoinFlips(uint256):(uint256,address,uint256,address,uint256,uint256)",
+      "EtherCoinFlipStructs",
+      "EtherCoinFlipStructs(uint256):(uint256,address,uint256,address,uint256,uint256,address,address)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
     if (result.reverted) {
@@ -221,54 +175,15 @@ export class Contract extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new Contract__activeCoinFlipsResult(
+      new Contract__EtherCoinFlipStructsResult(
         value[0].toBigInt(),
         value[1].toAddress(),
         value[2].toBigInt(),
         value[3].toAddress(),
         value[4].toBigInt(),
-        value[5].toBigInt()
-      )
-    );
-  }
-
-  finishedCoinFlips(param0: BigInt): Contract__finishedCoinFlipsResult {
-    let result = super.call(
-      "finishedCoinFlips",
-      "finishedCoinFlips(uint256):(uint256,address,uint256,address,uint256,uint256)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
-    );
-
-    return new Contract__finishedCoinFlipsResult(
-      result[0].toBigInt(),
-      result[1].toAddress(),
-      result[2].toBigInt(),
-      result[3].toAddress(),
-      result[4].toBigInt(),
-      result[5].toBigInt()
-    );
-  }
-
-  try_finishedCoinFlips(
-    param0: BigInt
-  ): ethereum.CallResult<Contract__finishedCoinFlipsResult> {
-    let result = super.tryCall(
-      "finishedCoinFlips",
-      "finishedCoinFlips(uint256):(uint256,address,uint256,address,uint256,uint256)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(
-      new Contract__finishedCoinFlipsResult(
-        value[0].toBigInt(),
-        value[1].toAddress(),
-        value[2].toBigInt(),
-        value[3].toAddress(),
-        value[4].toBigInt(),
-        value[5].toBigInt()
+        value[5].toBigInt(),
+        value[6].toAddress(),
+        value[7].toAddress()
       )
     );
   }
