@@ -52,7 +52,7 @@ const Home: NextPage = () =>  {
       <main className={styles.main}>
         <StartCoinFlipButton />
         <br />
-        <Dashboard coinFlips={result.data?.startedCoinFlips} />
+        <Dashboard activeCoinFlips={activeCoinFlips} finishedCoinFlips={finishedCoinFlips} />
       </main>
 
       <footer className={styles.footer}>
