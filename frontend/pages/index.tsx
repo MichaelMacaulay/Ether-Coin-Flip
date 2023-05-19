@@ -39,8 +39,6 @@ const Home: NextPage = () =>  {
     (flip) => !finishedCoinFlipIDs.has(flip.theCoinFlipID)
   );
 
-  console.log(data);
-
   return (
     <div className={styles.container}>
       <Head>
