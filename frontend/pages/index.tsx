@@ -1,14 +1,17 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import styles from '../styles/Home.module.css';
-import dynamic from 'next/dynamic';
-import Dashboard from './components/dashboard';
-import { useQuery } from 'urql';
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import type { NextPage } from "next";
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
+import dynamic from "next/dynamic";
+import Dashboard from "./components/dashboard";
+import { useQuery } from "urql";
 
-const StartCoinFlipButton = dynamic(() => import("./components/startCoinFlipButton"), {
-  ssr: false,
-});
+const StartCoinFlipButton = dynamic(
+  () => import("./components/startCoinFlipButton"),
+  {
+    ssr: false,
+  }
+);
 
 const exampleQuery = `{
   finishedCoinFlips(first: 5) {
@@ -25,15 +28,16 @@ const exampleQuery = `{
   }
 }`;
 
-const Home: NextPage = () =>  {
-
+const Home: NextPage = () => {
   const [result] = useQuery({ query: exampleQuery });
   const { data, fetching, error } = result;
 
   const startedCoinFlips = data?.startedCoinFlips || [];
   const finishedCoinFlips = data?.finishedCoinFlips || [];
 
-  const finishedCoinFlipIDs = new Set(finishedCoinFlips.map((flip) => flip.theCoinFlipID));
+  const finishedCoinFlipIDs = new Set(
+    finishedCoinFlips.map((flip) => flip.theCoinFlipID)
+  );
 
   const activeCoinFlips = startedCoinFlips.filter(
     (flip) => !finishedCoinFlipIDs.has(flip.theCoinFlipID)
@@ -52,11 +56,13 @@ const Home: NextPage = () =>  {
       <main className={styles.main}>
         <StartCoinFlipButton />
         <br />
-        <Dashboard activeCoinFlips={activeCoinFlips} finishedCoinFlips={finishedCoinFlips} />
+        <Dashboard
+          activeCoinFlips={activeCoinFlips}
+          finishedCoinFlips={finishedCoinFlips}
+        />
       </main>
 
-      <footer className={styles.footer}>
-      </footer>
+      <footer className={styles.footer}></footer>
     </div>
   );
 };
