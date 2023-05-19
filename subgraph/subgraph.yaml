@@ -1,0 +1,27 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Contract
+    network: sepolia
+    source:
+      address: "0x8D80DfbBDF8074B62364c2DE543B3987e109bBa6"
+      abi: Contract
+      startBlock: 3518559
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - FinishedCoinFlip
+        - StartedCoinFlip
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: FinishedCoinFlip(indexed uint256,indexed address,indexed address)
+          handler: handleFinishedCoinFlip
+        - event: StartedCoinFlip(indexed uint256,indexed address,uint256)
+          handler: handleStartedCoinFlip
+      file: ./src/contract.ts

@@ -1,0 +1,19 @@
+type FinishedCoinFlip @entity(immutable: true) {
+  id: Bytes!
+  theCoinFlipID: BigInt! # uint256
+  winner: Bytes! # address
+  loser: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type StartedCoinFlip @entity(immutable: true) {
+  id: Bytes!
+  theCoinFlipID: BigInt! # uint256
+  theBetStarter: Bytes! # address
+  theStartingWager: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
