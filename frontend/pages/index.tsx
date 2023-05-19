@@ -11,13 +11,13 @@ const StartCoinFlipButton = dynamic(() => import("./components/startCoinFlipButt
 });
 
 const exampleQuery = `{
-  finishedCoinFlips(first: 10) {
+  finishedCoinFlips(first: 5) {
     id
     theCoinFlipID
     winner
     loser
   }
-  startedCoinfFlips(first: 10) {
+  startedCoinFlips(first: 5) {
     id
     theCoinFlipID
     theBetStarter
@@ -30,7 +30,7 @@ const Home: NextPage = () =>  {
   const [result] = useQuery({ query: exampleQuery });
   const { data, fetching, error } = result;
 
-  const startedCoinFlips = data?.startedCoinfFlips || [];
+  const startedCoinFlips = data?.startedCoinFlips || [];
   const finishedCoinFlips = data?.finishedCoinFlips || [];
 
   const finishedCoinFlipIDs = new Set(finishedCoinFlips.map((flip) => flip.theCoinFlipID));
@@ -38,6 +38,8 @@ const Home: NextPage = () =>  {
   const activeCoinFlips = startedCoinFlips.filter(
     (flip) => !finishedCoinFlipIDs.has(flip.theCoinFlipID)
   );
+
+  console.log(data);
 
   return (
     <div className={styles.container}>
