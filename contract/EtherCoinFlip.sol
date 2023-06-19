@@ -1,11 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract EtherCoinFlip {
-    using SafeMath for uint256;
-
     struct EtherCoinFlipStruct {
         uint256 ID;
         address payable betStarter;
@@ -26,7 +23,7 @@ contract EtherCoinFlip {
     function newCoinFlip() public payable returns (uint256 coinFlipID) {
         address payable player1 = payable(msg.sender);
         coinFlipID = numberOfCoinFlips;
-        numberOfCoinFlips = numberOfCoinFlips.add(1);
+        numberOfCoinFlips = numberOfCoinFlips + 1;
         EtherCoinFlipStructs[coinFlipID] = EtherCoinFlipStruct(
             coinFlipID,
             player1,
@@ -41,28 +38,28 @@ contract EtherCoinFlip {
     }
 
     function endCoinFlip(uint256 coinFlipID) public payable {
-    EtherCoinFlipStruct storage currentCoinFlip = EtherCoinFlipStructs[coinFlipID];
-    address payable player2 = payable(msg.sender);
+        EtherCoinFlipStruct storage currentCoinFlip = EtherCoinFlipStructs[coinFlipID];
+        address payable player2 = payable(msg.sender);
 
-    require(msg.value >= currentCoinFlip.startingWager.mul(99).div(100) && msg.value <= currentCoinFlip.startingWager.mul(101).div(100), "Ending wager must be within 1% of the starting wager");
-    require(coinFlipID == currentCoinFlip.ID, "Invalid coin flip ID");
+        require(msg.value >= currentCoinFlip.startingWager * 99 / 100 && msg.value <= currentCoinFlip.startingWager * 101 / 100, "Ending wager must be within 1% of the starting wager");
+        require(coinFlipID == currentCoinFlip.ID, "Invalid coin flip ID");
 
-    currentCoinFlip.betEnder = player2;
-    currentCoinFlip.endingWager = msg.value;
-    currentCoinFlip.etherTotal = currentCoinFlip.startingWager.add(currentCoinFlip.endingWager);
+        currentCoinFlip.betEnder = player2;
+        currentCoinFlip.endingWager = msg.value;
+        currentCoinFlip.etherTotal = currentCoinFlip.startingWager + currentCoinFlip.endingWager;
 
-    bytes32 randomHash = keccak256(abi.encodePacked(block.chainid, block.gaslimit, block.number, block.timestamp, msg.sender));
-    uint256 randomResult = uint256(randomHash);
+        bytes32 randomHash = keccak256(abi.encodePacked(block.chainid, block.gaslimit, block.number, block.timestamp, msg.sender));
+        uint256 randomResult = uint256(randomHash);
 
-    if ((randomResult % 2) == 0) {
-        currentCoinFlip.winner = currentCoinFlip.betStarter;
-        currentCoinFlip.loser = currentCoinFlip.betEnder;
-    } else {
-        currentCoinFlip.winner = currentCoinFlip.betEnder;
-        currentCoinFlip.loser = currentCoinFlip.betStarter;
+        if ((randomResult % 2) == 0) {
+            currentCoinFlip.winner = currentCoinFlip.betStarter;
+            currentCoinFlip.loser = currentCoinFlip.betEnder;
+        } else {
+            currentCoinFlip.winner = currentCoinFlip.betEnder;
+            currentCoinFlip.loser = currentCoinFlip.betStarter;
+        }
+
+        currentCoinFlip.winner.transfer(currentCoinFlip.etherTotal);
+        emit FinishedCoinFlip(currentCoinFlip.ID, currentCoinFlip.winner, currentCoinFlip.loser);
     }
-
-    currentCoinFlip.winner.transfer(currentCoinFlip.etherTotal);
-    emit FinishedCoinFlip(currentCoinFlip.ID, currentCoinFlip.winner, currentCoinFlip.loser);
-}
 }
