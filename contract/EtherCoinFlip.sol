@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
+import "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol";
+import "@chainlink/contracts/src/v0.8/VRFV2WrapperConsumerBase.sol";
 
-contract EtherCoinFlip {
+contract EtherCoinFlip is VRFV2WrapperConsumerBase, ConfirmedOwner {
     struct EtherCoinFlipStruct {
         uint256 ID;
         address payable betStarter;
@@ -16,9 +18,21 @@ contract EtherCoinFlip {
 
     uint256 numberOfCoinFlips = 1;
     mapping(uint256 => EtherCoinFlipStruct) public EtherCoinFlipStructs;
+    mapping(uint256 => uint256) public randomResults;
 
     event StartedCoinFlip(uint256 indexed theCoinFlipID, address indexed theBetStarter, uint256 theStartingWager);
     event FinishedCoinFlip(uint256 indexed theCoinFlipID, address indexed winner, address indexed loser);
+
+    uint32 public callbackGasLimit = 100000;
+    uint16 public requestConfirmations = 3;
+    uint32 public numWords = 1;
+    address public linkAddress = 0x779877A7B0D9E8603169DdbD7836e478b4624789;
+    address public wrapperAddress = 0xab18414CD93297B0d12ac29E63Ca20f515b3DB46;
+
+    constructor()
+        ConfirmedOwner(msg.sender)
+        VRFV2WrapperConsumerBase(linkAddress, wrapperAddress)
+    {}
 
     function newCoinFlip() public payable returns (uint256 coinFlipID) {
         address payable player1 = payable(msg.sender);
@@ -48,10 +62,17 @@ contract EtherCoinFlip {
         currentCoinFlip.endingWager = msg.value;
         currentCoinFlip.etherTotal = currentCoinFlip.startingWager + currentCoinFlip.endingWager;
 
-        bytes32 randomHash = keccak256(abi.encodePacked(block.chainid, block.gaslimit, block.number, block.timestamp, msg.sender));
-        uint256 randomResult = uint256(randomHash);
+        uint256 requestId = requestRandomness(callbackGasLimit, requestConfirmations, numWords);
+        randomResults[requestId] = coinFlipID;
+    }
 
-        if ((randomResult % 2) == 0) {
+    function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal override {
+        uint256 coinFlipID = randomResults[requestId];
+        EtherCoinFlipStruct storage currentCoinFlip = EtherCoinFlipStructs[coinFlipID];
+
+        uint256 randomResult = randomWords[0];
+
+       if ((randomResult % 2) == 0) {
             currentCoinFlip.winner = currentCoinFlip.betStarter;
             currentCoinFlip.loser = currentCoinFlip.betEnder;
         } else {
@@ -61,5 +82,13 @@ contract EtherCoinFlip {
 
         currentCoinFlip.winner.transfer(currentCoinFlip.etherTotal);
         emit FinishedCoinFlip(currentCoinFlip.ID, currentCoinFlip.winner, currentCoinFlip.loser);
+    }
+
+    function withdrawLink() public onlyOwner {
+        LinkTokenInterface link = LinkTokenInterface(linkAddress);
+        require(
+            link.transfer(msg.sender, link.balanceOf(address(this))),
+            "Unable to transfer"
+        );
     }
 }
